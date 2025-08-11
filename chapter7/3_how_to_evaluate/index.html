@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第10章 データ出力・連携（Excel・BIツール） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>7.3 効果の測定：EXPLAIN QUERY PLAN | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
     
@@ -34,21 +34,9 @@
 
 
 
-  
-  
-  
-    
-  
-
 
 
   
-  
-    
-  
-    
-  
-    
   
     
   
@@ -77,9 +65,9 @@
 
   <div class="progress-container">
       <div class="progress-bar">
-          <div class="progress-fill" style="width: 100%;"></div>
+          <div class="progress-fill" style="width: 70%;"></div>
       </div>
-      <span>進捗: 100% (10/10章)</span>
+      <span>進捗: 70% (7/10章)</span>
   </div>
 
 
@@ -232,34 +220,81 @@
     
       
     
+      
+        <a href="/chapter7/">第7章 インデックス最適化</a> &gt;
+      
     
-    <span>第10章 データ出力・連携（Excel・BIツール）</span>
+    
+    <span>7.3 効果の測定：EXPLAIN QUERY PLAN</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第10章 データ出力・連携（Excel・BIツール）</h1>
+    <h1 class="content-title">7.3 効果の測定：EXPLAIN QUERY PLAN</h1>
     
-    <p class="content-subtitle">分析結果を次のアクションへ！レポートと可視化の世界</p>
+    <p class="content-subtitle">インデックスが本当に使われているかを確認する最も重要な方法</p>
     
 </div>
 
 <div class="content-body">
-    
-<div class="learning-objectives">
-  <h3>📚 この章で学習すること</h3>
-  <ul class="objectives-list">
-    <ul>
-<li>A5 SQL:Mk2から分析結果をCSVやExcelファイルとしてエクスポートする</li>
-<li>ExcelのPower Queryを使い、SQLiteデータベースから直接データを取得・更新する</li>
-<li>既存のExcelレポートのデータソースを、AccessからSQLiteに切り替える</li>
-<li>Power BIなどのBIツールとSQLiteを連携させるための基本的な考え方を理解する</li>
-</ul>
+    <p>インデックスを作成しても、SQLiteがそれをクエリ実行時に利用してくれなければ意味がありません。インデックスが使われているかを確認するには、<code>EXPLAIN QUERY PLAN</code>という魔法のコマンドを使います。</p>
+<p>使い方は簡単で、確認したい<code>SELECT</code>文の先頭に<code>EXPLAIN QUERY PLAN</code>を付けるだけです。</p>
+<h3 id="使用例">使用例</h3>
+<p><strong>インデックスがない状態での確認</strong>
+<code>CustomerID</code>列にインデックスがない状態で、以下のクエリを実行します。
 
-  </ul>
+<div class="code-block-container">
+  <div class="code-header">EXPLAIN QUERY PLANの実行</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">EXPLAIN</span><span class="w"> </span><span class="n">QUERY</span><span class="w"> </span><span class="n">PLAN</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">CustomerID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;C1025&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
-<p>データ分析は、SQLを書いて結果を眺めるだけでは終わりません。その結果をレポートとしてまとめ、関係者と共有し、次のビジネスアクションに繋げてこそ価値が生まれます。</p>
-<p>この最終章では、SQLiteで処理したデータを、最も身近なレポートツールである <strong>Excel</strong> や、より高度な可視化を得意とする <strong>BI (ビジネスインテリジェンス) ツール</strong> と連携させる方法を学びます。特に、ExcelのPower Query機能を使えば、手作業でのデータ更新から解放され、レポートの自動化を実現できます。これまで学んだスキルを実務で最大限に活かすための、最後の仕上げです。</p>
+</div>  
+</div></p>
+<p><strong>実行結果</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>detail</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>SCAN TABLE Sales</td>
+      </tr>
+  </tbody>
+</table>
+<p>この<code>SCAN TABLE</code>が「フルテーブルスキャン」を意味します。つまり、テーブルを最初から最後まで全部探している状態で、非常に非効率です。</p>
+<p><strong>インデックスを作成し、再度確認</strong>
+<code>CustomerID</code>列にインデックス <code>IX_Sales_CustomerID</code> を作成した上で、もう一度同じコマンドを実行します。</p>
+<p><strong>実行結果</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th>detail</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>SEARCH TABLE Sales USING INDEX IX_Sales_CustomerID (CustomerID=?)</td>
+      </tr>
+  </tbody>
+</table>
+<p><code>SEARCH TABLE ... USING INDEX ...</code>と表示されれば成功です！これは、SQLiteが<code>IX_Sales_CustomerID</code>というインデックスを使って効率的にデータを検索していることを示しています。</p>
+
+<div class="info-box tip">
+  <div class="info-box-title">A5 SQL:Mk2での実行計画確認</div>
+  <p>A5 SQL:Mk2では、SQLエディタ上でクエリを選択し、<code>F6</code>キーを押すか、ツールバーの「実行計画の表示」ボタンをクリックするだけで、簡単に実行計画を確認できます。</p>
+</div>
+<p><code>WHERE</code>句や<code>ORDER BY</code>句を含むクエリのパフォーマンスチューニングを行う際は、必ずこの<code>EXPLAIN QUERY PLAN</code>でインデックスが有効活用されているかを確認する癖をつけましょう。</p>
 
 </div>
 
@@ -267,12 +302,6 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
 
@@ -281,65 +310,19 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
-
-  <div class="section-list">
-      <h3>この章のコンテンツ</h3>
-      <ul class="chapter-list">
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/1_a5_export/" class="chapter-link">
-                    10.1 A5 SQL:Mk2からのデータエクスポート
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/2_excel_powerquery/" class="chapter-link">
-                    10.2 Excel (Power Query) との連携
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/3_bi_tools/" class="chapter-link">
-                    10.3 BIツールとの連携
-                </a>
-              
-          </li>
-      
-      </ul>
-  </div>
 
 
 <div class="nav-buttons">
     
     
-        <a href="/chapter9/" class="nav-btn prev">← 前へ: 第9章 生成AI活用（ChatGPT）</a>
+        <a href="/chapter7/2_how_to_create/" class="nav-btn prev">← 前へ: 7.2 インデックスの作成方法</a>
     
 
     
     
-        
+        <a href="/chapter7/4_composite_index/" class="nav-btn next">次へ: 7.4 複合インデックスの活用 →</a>
     
 </div>
 

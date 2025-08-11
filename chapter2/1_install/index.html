@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第10章 データ出力・連携（Excel・BIツール） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>2.1 ツールのインストール | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
     
@@ -34,31 +34,9 @@
 
 
 
-  
-  
-  
-    
-  
-
 
 
   
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
   
     
   
@@ -77,9 +55,9 @@
 
   <div class="progress-container">
       <div class="progress-bar">
-          <div class="progress-fill" style="width: 100%;"></div>
+          <div class="progress-fill" style="width: 20%;"></div>
       </div>
-      <span>進捗: 100% (10/10章)</span>
+      <span>進捗: 20% (2/10章)</span>
   </div>
 
 
@@ -232,34 +210,51 @@
     
       
     
+      
+        <a href="/chapter2/">第2章 環境構築</a> &gt;
+      
     
-    <span>第10章 データ出力・連携（Excel・BIツール）</span>
+    
+    <span>2.1 ツールのインストール</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第10章 データ出力・連携（Excel・BIツール）</h1>
+    <h1 class="content-title">2.1 ツールのインストール</h1>
     
-    <p class="content-subtitle">分析結果を次のアクションへ！レポートと可視化の世界</p>
+    <p class="content-subtitle">SQLiteとA5 SQL:Mk2をダウンロードして準備します</p>
     
 </div>
 
 <div class="content-body">
-    
-<div class="learning-objectives">
-  <h3>📚 この章で学習すること</h3>
-  <ul class="objectives-list">
-    <ul>
-<li>A5 SQL:Mk2から分析結果をCSVやExcelファイルとしてエクスポートする</li>
-<li>ExcelのPower Queryを使い、SQLiteデータベースから直接データを取得・更新する</li>
-<li>既存のExcelレポートのデータソースを、AccessからSQLiteに切り替える</li>
-<li>Power BIなどのBIツールとSQLiteを連携させるための基本的な考え方を理解する</li>
-</ul>
+    <h3 id="ステップ1sqliteのダウンロード">ステップ1：SQLiteのダウンロード</h3>
+<p>まず、データベース本体であるSQLiteをダウンロードします。</p>
+<ol>
+<li><a href="https://www.sqlite.org/download.html">SQLiteの公式サイトのダウンロードページ</a>にアクセスします。</li>
+<li>「<strong>Precompiled Binaries for Windows</strong>」のセクションを探します。</li>
+<li>「<strong>sqlite-tools-win32-x86-xxxxxxx.zip</strong>」（xxxxxxxはバージョン番号）という名前のzipファイルをダウンロードします。32ビット版ですが、64ビットのWindowsでも問題なく動作します。</li>
+</ol>
+<p><code>[画像: SQLite公式サイトのダウンロードページ。該当箇所を赤枠で囲む]</code></p>
+<ol start="4">
+<li>ダウンロードしたzipファイルを解凍します。中に <code>sqlite3.exe</code> を含む3つのファイルがあることを確認してください。</li>
+<li>これらのファイルを、わかりやすい場所（例: <code>C:\sqlite</code>）にフォルダを作成して保存します。この<code>sqlite3.exe</code>がSQLiteの本体です。</li>
+</ol>
 
-  </ul>
+<div class="info-box tip">
+  <div class="info-box-title">PATHを通す（上級者向け）</div>
+  <p>コマンドプロンプトを頻繁に使う方は、このフォルダに「環境変数PATH」を通しておくと便利ですが、この講座ではA5 SQL:Mk2から利用するため、必須ではありません。</p>
 </div>
-<p>データ分析は、SQLを書いて結果を眺めるだけでは終わりません。その結果をレポートとしてまとめ、関係者と共有し、次のビジネスアクションに繋げてこそ価値が生まれます。</p>
-<p>この最終章では、SQLiteで処理したデータを、最も身近なレポートツールである <strong>Excel</strong> や、より高度な可視化を得意とする <strong>BI (ビジネスインテリジェンス) ツール</strong> と連携させる方法を学びます。特に、ExcelのPower Query機能を使えば、手作業でのデータ更新から解放され、レポートの自動化を実現できます。これまで学んだスキルを実務で最大限に活かすための、最後の仕上げです。</p>
+<h3 id="ステップ2a5-sqlmk2のダウンロードとインストール">ステップ2：A5 SQL:Mk2のダウンロードとインストール</h3>
+<p>次に、SQLiteを操作するためのGUIツール「A5 SQL:Mk2」を導入します。</p>
+<ol>
+<li><a href="https://a5m2.mmatsubara.com/d-index.html">A5 SQL:Mk2の公式サイト</a>にアクセスします。</li>
+<li>最新版のインストーラー（<code>a5m2_x64_vX_X_X_setup.exe</code>など）をダウンロードします。64ビット版を推奨します。</li>
+</ol>
+<p><code>[画像: A5 SQL:Mk2公式サイト。ダウンロードボタンを赤枠で囲む]</code></p>
+<ol start="3">
+<li>ダウンロードしたインストーラーを実行し、画面の指示に従ってインストールを完了させます。特に設定を変更する必要はありません。</li>
+</ol>
+<p>これで、分析に必要なツールがすべて揃いました。次のセクションで、これらのツールを使ってデータベースに接続してみましょう。</p>
 
 </div>
 
@@ -267,12 +262,6 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
 
@@ -281,65 +270,19 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
-
-  <div class="section-list">
-      <h3>この章のコンテンツ</h3>
-      <ul class="chapter-list">
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/1_a5_export/" class="chapter-link">
-                    10.1 A5 SQL:Mk2からのデータエクスポート
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/2_excel_powerquery/" class="chapter-link">
-                    10.2 Excel (Power Query) との連携
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/3_bi_tools/" class="chapter-link">
-                    10.3 BIツールとの連携
-                </a>
-              
-          </li>
-      
-      </ul>
-  </div>
 
 
 <div class="nav-buttons">
     
     
-        <a href="/chapter9/" class="nav-btn prev">← 前へ: 第9章 生成AI活用（ChatGPT）</a>
+        
     
 
     
     
-        
+        <a href="/chapter2/2_setup/" class="nav-btn next">次へ: 2.2 データベースへの接続 →</a>
     
 </div>
 

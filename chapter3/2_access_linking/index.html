@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第10章 データ出力・連携（Excel・BIツール） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>3.2 Accessからリンクテーブルで接続 | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
     
@@ -34,29 +34,9 @@
 
 
 
-  
-  
-  
-    
-  
-
 
 
   
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
   
     
   
@@ -77,9 +57,9 @@
 
   <div class="progress-container">
       <div class="progress-bar">
-          <div class="progress-fill" style="width: 100%;"></div>
+          <div class="progress-fill" style="width: 30%;"></div>
       </div>
-      <span>進捗: 100% (10/10章)</span>
+      <span>進捗: 30% (3/10章)</span>
   </div>
 
 
@@ -232,46 +212,63 @@
     
       
     
+      
+        <a href="/chapter3/">第3章 ハイブリッド運用（ODBC・パススルークエリ）</a> &gt;
+      
     
-    <span>第10章 データ出力・連携（Excel・BIツール）</span>
+    
+    <span>3.2 Accessからリンクテーブルで接続</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第10章 データ出力・連携（Excel・BIツール）</h1>
+    <h1 class="content-title">3.2 Accessからリンクテーブルで接続</h1>
     
-    <p class="content-subtitle">分析結果を次のアクションへ！レポートと可視化の世界</p>
+    <p class="content-subtitle">使い慣れたAccessの画面でSQLiteのデータを扱います</p>
     
 </div>
 
 <div class="content-body">
-    
-<div class="learning-objectives">
-  <h3>📚 この章で学習すること</h3>
-  <ul class="objectives-list">
-    <ul>
-<li>A5 SQL:Mk2から分析結果をCSVやExcelファイルとしてエクスポートする</li>
-<li>ExcelのPower Queryを使い、SQLiteデータベースから直接データを取得・更新する</li>
-<li>既存のExcelレポートのデータソースを、AccessからSQLiteに切り替える</li>
-<li>Power BIなどのBIツールとSQLiteを連携させるための基本的な考え方を理解する</li>
+    <p>ここでは、第2章で作成したSQLiteデータベース（<code>sales.db</code>）内のテーブルを、MS Accessのリンクテーブルとして参照する手順を解説します。
+※事前に<code>sales.db</code>内に何らかのテーブル（例: <code>T_売上</code>）が作成されていることを前提とします。</p>
+<h3 id="リンクテーブルの作成手順">リンクテーブルの作成手順</h3>
+<ol>
+<li>既存のAccessファイル（<code>.accdb</code>）を開きます。</li>
+<li>リボンの「外部データ」タブ → 「新しいデータソース」 → 「他のソースから」 → 「<strong>ODBC データベース</strong>」を選択します。</li>
+</ol>
+<p><code>[画像: Accessのメニュー操作。ODBCデータベースを選択する箇所をハイライト]</code></p>
+<ol start="3">
+<li>「外部データの取り込み」ウィンドウが表示されたら、「<strong>リンク テーブルを作成してソース データにリンクする</strong>」を選択し、「OK」をクリックします。</li>
+</ol>
+<p><code>[画像: 外部データの取り込みウィンドウ。リンクテーブルの選択肢をハイライト]</code></p>
+<ol start="4">
+<li>「データソースの選択」ウィンドウが開きます。「コンピューターデータソース」タブを選択し、「新規作成」ボタンをクリックします。</li>
+<li>「新しいデータソースの作成」ウィザードが始まります。「<strong>ユーザーデータソース</strong>」を選択し、「次へ」進みます。</li>
+<li>ドライバーの一覧から「<strong>SQLite3 ODBC Driver</strong>」を選択し、「次へ」→「完了」をクリックします。</li>
+</ol>
+<p><code>[画像: データソースの作成ウィザード。SQLite3 ODBC Driverを選択する場面]</code></p>
+<ol start="7">
+<li>SQLite用の接続設定ウィンドウが開きます。
+<ul>
+<li><strong>Database Name</strong>: 「Browse&hellip;」ボタンを押し、接続したいSQLiteデータベースファイル（例: <code>C:\MyData\sales.db</code>）を選択します。</li>
+<li>他の設定はデフォルトのままでOKです。</li>
 </ul>
+</li>
+</ol>
+<p><code>[画像: SQLiteのODBC接続設定ウィンドウ。データベースファイルの選択箇所をハイライト]</code></p>
+<ol start="8">
+<li>「OK」を押すと、「リンク」ウィンドウが表示され、SQLiteデータベース内のテーブル一覧が表示されます。</li>
+<li>リンクしたいテーブルを選択し、「OK」をクリックします。</li>
+<li>Accessのナビゲーションウィンドウに、地球儀のアイコンが付いたリンクテーブルが作成されます。</li>
+</ol>
+<p><code>[画像: Accessに作成されたリンクテーブル。アイコンを指し示す]</code></p>
+<p>これで完了です！このテーブルは、見た目や操作感は通常のAccessテーブルと全く同じですが、実体はSQLiteデータベースにあります。Accessのフォームやクエリからこのリンクテーブルを参照すれば、データはSQLiteから直接読み書きされます。</p>
 
-  </ul>
 </div>
-<p>データ分析は、SQLを書いて結果を眺めるだけでは終わりません。その結果をレポートとしてまとめ、関係者と共有し、次のビジネスアクションに繋げてこそ価値が生まれます。</p>
-<p>この最終章では、SQLiteで処理したデータを、最も身近なレポートツールである <strong>Excel</strong> や、より高度な可視化を得意とする <strong>BI (ビジネスインテリジェンス) ツール</strong> と連携させる方法を学びます。特に、ExcelのPower Query機能を使えば、手作業でのデータ更新から解放され、レポートの自動化を実現できます。これまで学んだスキルを実務で最大限に活かすための、最後の仕上げです。</p>
-
-</div>
 
 
 
   
-  
-    
-  
-    
-  
-    
   
 
 
@@ -281,65 +278,19 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
-
-  <div class="section-list">
-      <h3>この章のコンテンツ</h3>
-      <ul class="chapter-list">
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/1_a5_export/" class="chapter-link">
-                    10.1 A5 SQL:Mk2からのデータエクスポート
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/2_excel_powerquery/" class="chapter-link">
-                    10.2 Excel (Power Query) との連携
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/3_bi_tools/" class="chapter-link">
-                    10.3 BIツールとの連携
-                </a>
-              
-          </li>
-      
-      </ul>
-  </div>
 
 
 <div class="nav-buttons">
     
     
-        <a href="/chapter9/" class="nav-btn prev">← 前へ: 第9章 生成AI活用（ChatGPT）</a>
+        <a href="/chapter3/1_odbc_setup/" class="nav-btn prev">← 前へ: 3.1 ODBCドライバのセットアップ</a>
     
 
     
     
-        
+        <a href="/chapter3/3_passthrough/" class="nav-btn next">次へ: 3.3 パススルークエリで性能を最大化 →</a>
     
 </div>
 

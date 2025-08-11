@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第10章 データ出力・連携（Excel・BIツール） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>3.1 ODBCドライバのセットアップ | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
     
@@ -34,29 +34,9 @@
 
 
 
-  
-  
-  
-    
-  
-
 
 
   
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
   
     
   
@@ -77,9 +57,9 @@
 
   <div class="progress-container">
       <div class="progress-bar">
-          <div class="progress-fill" style="width: 100%;"></div>
+          <div class="progress-fill" style="width: 30%;"></div>
       </div>
-      <span>進捗: 100% (10/10章)</span>
+      <span>進捗: 30% (3/10章)</span>
   </div>
 
 
@@ -232,34 +212,51 @@
     
       
     
+      
+        <a href="/chapter3/">第3章 ハイブリッド運用（ODBC・パススルークエリ）</a> &gt;
+      
     
-    <span>第10章 データ出力・連携（Excel・BIツール）</span>
+    
+    <span>3.1 ODBCドライバのセットアップ</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第10章 データ出力・連携（Excel・BIツール）</h1>
+    <h1 class="content-title">3.1 ODBCドライバのセットアップ</h1>
     
-    <p class="content-subtitle">分析結果を次のアクションへ！レポートと可視化の世界</p>
+    <p class="content-subtitle">AccessとSQLiteを繋ぐための「通訳」を準備します</p>
     
 </div>
 
 <div class="content-body">
-    
-<div class="learning-objectives">
-  <h3>📚 この章で学習すること</h3>
-  <ul class="objectives-list">
-    <ul>
-<li>A5 SQL:Mk2から分析結果をCSVやExcelファイルとしてエクスポートする</li>
-<li>ExcelのPower Queryを使い、SQLiteデータベースから直接データを取得・更新する</li>
-<li>既存のExcelレポートのデータソースを、AccessからSQLiteに切り替える</li>
-<li>Power BIなどのBIツールとSQLiteを連携させるための基本的な考え方を理解する</li>
+    <p>AccessとSQLiteは、本来は直接会話することができません。そこで、両者の間に入って言葉を翻訳してくれる「<strong>ODBC (Open Database Connectivity)ドライバ</strong>」という通訳をPCに導入します。</p>
+<h3 id="sqlite-odbcドライバのダウンロード">SQLite ODBCドライバのダウンロード</h3>
+<ol>
+<li><a href="http://www.ch-werner.de/sqliteodbc/">SQLite ODBC Driverの公式サイト</a>にアクセスします。</li>
+<li>「Download」セクションから、お使いのWindowsに合ったインストーラーをダウンロードします。通常は「<strong>sqliteodbc_w64.exe</strong>」（64ビット版）で問題ありません。</li>
+</ol>
+<p><code>[画像: SQLite ODBC Driverのダウンロードページ。該当ファイルを赤枠で囲む]</code></p>
+<h3 id="インストールと設定">インストールと設定</h3>
+<ol>
+<li>ダウンロードしたインストーラーを実行し、画面の指示に従ってインストールします。特に設定の変更は不要です。</li>
+<li>インストールが完了したら、WindowsのODBC設定を確認します。
+<ul>
+<li>Windowsの検索バーで「<strong>ODBC</strong>」と入力し、「<strong>ODBC データ ソース (64ビット)</strong>」を起動します。</li>
 </ul>
+</li>
+</ol>
+<p><code>[画像: Windowsの検索バーでODBCを検索する様子]</code></p>
+<ol start="3">
+<li>「ODBCデータソースアドミニストレーター」が開きます。「ドライバー」タブをクリックしてください。</li>
+<li>一覧の中に「<strong>SQLite3 ODBC Driver</strong>」という名前があれば、正常にインストールされています。</li>
+</ol>
+<p><code>[画像: ODBCデータソースアドミニストレーターの「ドライバー」タブ。SQLite3 ODBC Driverをハイライト]</code></p>
 
-  </ul>
+<div class="info-box tip">
+  <div class="info-box-title">DSNの登録は不要</div>
+  <p>ODBCには「データソース名(DSN)」を事前に登録する方法もありますが、Accessから直接接続する場合は不要です。ここではドライバがPCにインストールされていることだけ確認できればOKです。</p>
 </div>
-<p>データ分析は、SQLを書いて結果を眺めるだけでは終わりません。その結果をレポートとしてまとめ、関係者と共有し、次のビジネスアクションに繋げてこそ価値が生まれます。</p>
-<p>この最終章では、SQLiteで処理したデータを、最も身近なレポートツールである <strong>Excel</strong> や、より高度な可視化を得意とする <strong>BI (ビジネスインテリジェンス) ツール</strong> と連携させる方法を学びます。特に、ExcelのPower Query機能を使えば、手作業でのデータ更新から解放され、レポートの自動化を実現できます。これまで学んだスキルを実務で最大限に活かすための、最後の仕上げです。</p>
+<p>これで、AccessがSQLiteと会話するための準備が整いました。</p>
 
 </div>
 
@@ -267,12 +264,6 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
 
@@ -281,65 +272,19 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
-
-  <div class="section-list">
-      <h3>この章のコンテンツ</h3>
-      <ul class="chapter-list">
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/1_a5_export/" class="chapter-link">
-                    10.1 A5 SQL:Mk2からのデータエクスポート
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/2_excel_powerquery/" class="chapter-link">
-                    10.2 Excel (Power Query) との連携
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/3_bi_tools/" class="chapter-link">
-                    10.3 BIツールとの連携
-                </a>
-              
-          </li>
-      
-      </ul>
-  </div>
 
 
 <div class="nav-buttons">
     
     
-        <a href="/chapter9/" class="nav-btn prev">← 前へ: 第9章 生成AI活用（ChatGPT）</a>
+        
     
 
     
     
-        
+        <a href="/chapter3/2_access_linking/" class="nav-btn next">次へ: 3.2 Accessからリンクテーブルで接続 →</a>
     
 </div>
 

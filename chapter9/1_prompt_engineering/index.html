@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9.1 効果的なプロンプトの作り方 | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    
+    <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
+    
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+    <div class="header-content">
+        <div class="header-title">
+            <h1><a href="/">SQLite &#43; A5 SQL:Mk2 学習サイト</a></h1>
+            <span class="header-subtitle">SQLiteを用いた効率的データ分析</span>
+        </div>
+        
+        <button id="menu-toggle" class="menu-toggle" aria-label="ナビゲーションを開く">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+    </div>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      
+      
+
+
+
+
+
+  
+
+
+
+
+  <div class="progress-container">
+      <div class="progress-bar">
+          <div class="progress-fill" style="width: 90%;"></div>
+      </div>
+      <span>進捗: 90% (9/10章)</span>
+  </div>
+
+
+</header>
+        
+
+
+
+<nav class="sidebar">
+    <div class="nav-section">
+        <h3>学習コース</h3>
+        <ul class="chapter-list">
+            
+
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter1/" class="chapter-link ">
+                    <span class="chapter-number">1</span>
+                    <span>第1章 移行メリット詳細</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter2/" class="chapter-link ">
+                    <span class="chapter-number">2</span>
+                    <span>第2章 環境構築</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter3/" class="chapter-link ">
+                    <span class="chapter-number">3</span>
+                    <span>第3章 ハイブリッド運用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter4/" class="chapter-link ">
+                    <span class="chapter-number">4</span>
+                    <span>第4章 基本操作</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter5/" class="chapter-link ">
+                    <span class="chapter-number">5</span>
+                    <span>第5章 クエリ基礎</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter6/" class="chapter-link ">
+                    <span class="chapter-number">6</span>
+                    <span>第6章 クエリ応用技術</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter7/" class="chapter-link ">
+                    <span class="chapter-number">7</span>
+                    <span>第7章 インデックス最適化</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter8/" class="chapter-link ">
+                    <span class="chapter-number">8</span>
+                    <span>第8章 実践的分析手法</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter9/" class="chapter-link ">
+                    <span class="chapter-number">9</span>
+                    <span>第9章 生成AI活用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter10/" class="chapter-link ">
+                    <span class="chapter-number">10</span>
+                    <span>第10章 データ出力・連携</span>
+                </a>
+            </li>
+            
+
+            
+        </ul>
+    </div>
+</nav>
+        
+        <main class="main">
+            
+
+
+
+
+
+<div class="breadcrumb">
+  
+
+  
+  
+    <a href="/">ホーム</a> &gt;
+  
+
+  
+
+  
+    
+      
+    
+      
+        <a href="/chapter9/">第9章 生成AI活用（ChatGPT）</a> &gt;
+      
+    
+    
+    <span>9.1 効果的なプロンプトの作り方</span>
+  
+</div>
+
+<div class="content-header">
+    <h1 class="content-title">9.1 効果的なプロンプトの作り方</h1>
+    
+    <p class="content-subtitle">AIから的確な答えを引き出す「質問力」</p>
+    
+</div>
+
+<div class="content-body">
+    <p>生成AIから質の高い回答を得るためには、質の高い質問、すなわち「<strong>プロンプト</strong>」を与えることが不可欠です。これを「プロンプトエンジニアリング」と呼びます。SQLに関してAIに質問する際は、以下の要素をプロンプトに含めるのが効果的です。</p>
+<h3 id="良いプロンプトの構成要素">良いプロンプトの構成要素</h3>
+<ol>
+<li><strong>役割の指定 (Role)</strong>
+<ul>
+<li>AIに特定の専門家として振る舞うよう指示します。「あなたはプロのデータベースエンジニアです」のように役割を与えることで、回答の質が向上します。</li>
+</ul>
+</li>
+<li><strong>前提条件の提示 (Context)</strong>
+<ul>
+<li>データベースの種類 (<code>SQLite</code>)、テーブルの構造 (<code>CREATE TABLE</code>文)、データのサンプルなど、質問の背景となる情報を具体的に提供します。</li>
+</ul>
+</li>
+<li><strong>具体的な指示 (Instruction)</strong>
+<ul>
+<li>「何をしてほしいのか」を明確に伝えます。「クエリを作成してください」「このクエリを高速化してください」「エラーの原因を教えてください」など。</li>
+</ul>
+</li>
+<li><strong>出力形式の指定 (Output Format)</strong>
+<ul>
+<li>回答をどのような形式で返してほしいかを指定します。「SQLコードだけを返してください」「手順を箇条書きで説明してください」など。</li>
+</ul>
+</li>
+</ol>
+<h3 id="具体例">具体例</h3>
+<p><strong>悪いプロンプトの例 ❌</strong></p>
+<blockquote>
+<p>売上を集計するSQLを教えて</p></blockquote>
+<p>これでは、どのテーブルをどう集計したいのか全く分かりません。</p>
+<p><strong>良いプロンプトの例 ✅</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># 役割
+</span></span><span class="line"><span class="cl">あなたはプロのSQLiteデータベースエンジニアです。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 前提条件
+</span></span><span class="line"><span class="cl">以下のテーブル構造を持っています。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">CREATE TABLE Sales (
+</span></span><span class="line"><span class="cl">  SaleID INTEGER PRIMARY KEY,
+</span></span><span class="line"><span class="cl">  SaleDate TEXT,
+</span></span><span class="line"><span class="cl">  CustomerID TEXT,
+</span></span><span class="line"><span class="cl">  Amount INTEGER
+</span></span><span class="line"><span class="cl">);
+</span></span><span class="line"><span class="cl">CREATE TABLE Customers (
+</span></span><span class="line"><span class="cl">  CustomerID TEXT PRIMARY KEY,
+</span></span><span class="line"><span class="cl">  CustomerName TEXT,
+</span></span><span class="line"><span class="cl">  Prefecture TEXT
+</span></span><span class="line"><span class="cl">);
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 指示
+</span></span><span class="line"><span class="cl">上記テーブルを結合し、都道府県（Prefecture）別の売上合計（Amount）を計算するSQLクエリを作成してください。
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 出力形式
+</span></span><span class="line"><span class="cl">SQLiteで実行可能なSQLコードのみを提示してください。
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>このように、必要な情報を過不足なく提供することが、AIを賢い相棒にするための第一歩です。</p>
+
+</div>
+
+
+
+  
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+<div class="nav-buttons">
+    
+    
+        
+    
+
+    
+    
+        <a href="/chapter9/2_use_cases/" class="nav-btn next">次へ: 9.2 実践的な活用シーン →</a>
+    
+</div>
+
+        </main>
+        
+        <footer class="footer">
+    <p>&copy; 2025 SQLite&#43;A5 SQL:Mk2 学習サイト</p>
+</footer>
+    </div>
+    
+    <script src="/js/main.min.6a80bd6c365613ae74ea9b9c1b373baf4fed41b11102bab2731a165dda73a8a3.js" defer></script>
+
+    
+  
+  
+
+</body>
+</html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第10章 データ出力・連携（Excel・BIツール） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>2.3 バックアップと復旧 | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
     
@@ -34,31 +34,9 @@
 
 
 
-  
-  
-  
-    
-  
-
 
 
   
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
   
     
   
@@ -77,9 +55,9 @@
 
   <div class="progress-container">
       <div class="progress-bar">
-          <div class="progress-fill" style="width: 100%;"></div>
+          <div class="progress-fill" style="width: 20%;"></div>
       </div>
-      <span>進捗: 100% (10/10章)</span>
+      <span>進捗: 20% (2/10章)</span>
   </div>
 
 
@@ -232,34 +210,45 @@
     
       
     
+      
+        <a href="/chapter2/">第2章 環境構築</a> &gt;
+      
     
-    <span>第10章 データ出力・連携（Excel・BIツール）</span>
+    
+    <span>2.3 バックアップと復旧</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第10章 データ出力・連携（Excel・BIツール）</h1>
+    <h1 class="content-title">2.3 バックアップと復旧</h1>
     
-    <p class="content-subtitle">分析結果を次のアクションへ！レポートと可視化の世界</p>
+    <p class="content-subtitle">大切なデータを守るための基本操作です</p>
     
 </div>
 
 <div class="content-body">
-    
-<div class="learning-objectives">
-  <h3>📚 この章で学習すること</h3>
-  <ul class="objectives-list">
-    <ul>
-<li>A5 SQL:Mk2から分析結果をCSVやExcelファイルとしてエクスポートする</li>
-<li>ExcelのPower Queryを使い、SQLiteデータベースから直接データを取得・更新する</li>
-<li>既存のExcelレポートのデータソースを、AccessからSQLiteに切り替える</li>
-<li>Power BIなどのBIツールとSQLiteを連携させるための基本的な考え方を理解する</li>
-</ul>
+    <p>データベース運用で最も重要な作業の一つがバックアップです。SQLiteのバックアップは非常にシンプルです。</p>
+<h3 id="バックアップ方法">バックアップ方法</h3>
+<p>SQLiteデータベースは、単一のファイルです。そのため、バックアップは<strong>データベースファイル（例: <code>sales.db</code>）をコピーするだけ</strong>で完了します。</p>
+<ol>
+<li>エクスプローラーでデータベースファイルが保存されているフォルダを開きます。</li>
+<li>対象のデータベースファイル（<code>.db</code>ファイル）をコピーします。</li>
+<li>別の場所（バックアップ用フォルダ、USBメモリ、クラウドストレージなど）に貼り付けます。</li>
+<li>ファイル名に日付を付けておくと、いつのバックアップか分かりやすくなります。（例: <code>sales_2025-01-01.db</code>）</li>
+</ol>
 
-  </ul>
+<div class="info-box warning">
+  <div class="info-box-title">注意点</div>
+  <p>データベースに接続して作業中のファイルは、そのままコピーするとデータが不整合を起こす可能性があります。安全のため、A5 SQL:Mk2でデータベースへの接続を一度切断してからコピーするか、A5 SQL:Mk2を閉じてからコピーすることを推奨します。</p>
 </div>
-<p>データ分析は、SQLを書いて結果を眺めるだけでは終わりません。その結果をレポートとしてまとめ、関係者と共有し、次のビジネスアクションに繋げてこそ価値が生まれます。</p>
-<p>この最終章では、SQLiteで処理したデータを、最も身近なレポートツールである <strong>Excel</strong> や、より高度な可視化を得意とする <strong>BI (ビジネスインテリジェンス) ツール</strong> と連携させる方法を学びます。特に、ExcelのPower Query機能を使えば、手作業でのデータ更新から解放され、レポートの自動化を実現できます。これまで学んだスキルを実務で最大限に活かすための、最後の仕上げです。</p>
+<h3 id="復旧方法">復旧方法</h3>
+<p>バックアップからデータを復旧させるのも簡単です。</p>
+<ol>
+<li>問題が発生したデータベースファイルを削除またはリネームします。</li>
+<li>バックアップしておいたデータベースファイルのコピーを、元の場所に配置します。</li>
+<li>ファイル名を元の名前に戻します（例: <code>sales_2025-01-01.db</code> → <code>sales.db</code>）。</li>
+</ol>
+<p>これだけで復旧は完了です。このシンプルさがSQLiteの大きなメリットの一つです。</p>
 
 </div>
 
@@ -267,12 +256,6 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
 
@@ -281,60 +264,14 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
-
-  <div class="section-list">
-      <h3>この章のコンテンツ</h3>
-      <ul class="chapter-list">
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/1_a5_export/" class="chapter-link">
-                    10.1 A5 SQL:Mk2からのデータエクスポート
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/2_excel_powerquery/" class="chapter-link">
-                    10.2 Excel (Power Query) との連携
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/3_bi_tools/" class="chapter-link">
-                    10.3 BIツールとの連携
-                </a>
-              
-          </li>
-      
-      </ul>
-  </div>
 
 
 <div class="nav-buttons">
     
     
-        <a href="/chapter9/" class="nav-btn prev">← 前へ: 第9章 生成AI活用（ChatGPT）</a>
+        <a href="/chapter2/2_setup/" class="nav-btn prev">← 前へ: 2.2 データベースへの接続</a>
     
 
     

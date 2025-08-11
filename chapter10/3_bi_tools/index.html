@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第10章 データ出力・連携（Excel・BIツール） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>10.3 BIツールとの連携 | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
     
@@ -33,12 +33,6 @@
 
 
 
-
-  
-  
-  
-    
-  
 
 
 
@@ -232,34 +226,49 @@
     
       
     
+      
+        <a href="/chapter10/">第10章 データ出力・連携（Excel・BIツール）</a> &gt;
+      
     
-    <span>第10章 データ出力・連携（Excel・BIツール）</span>
+    
+    <span>10.3 BIツールとの連携</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第10章 データ出力・連携（Excel・BIツール）</h1>
+    <h1 class="content-title">10.3 BIツールとの連携</h1>
     
-    <p class="content-subtitle">分析結果を次のアクションへ！レポートと可視化の世界</p>
+    <p class="content-subtitle">より高度な可視化とダッシュボード作成へ</p>
     
 </div>
 
 <div class="content-body">
-    
-<div class="learning-objectives">
-  <h3>📚 この章で学習すること</h3>
-  <ul class="objectives-list">
-    <ul>
-<li>A5 SQL:Mk2から分析結果をCSVやExcelファイルとしてエクスポートする</li>
-<li>ExcelのPower Queryを使い、SQLiteデータベースから直接データを取得・更新する</li>
-<li>既存のExcelレポートのデータソースを、AccessからSQLiteに切り替える</li>
-<li>Power BIなどのBIツールとSQLiteを連携させるための基本的な考え方を理解する</li>
+    <p>Power BIやTableauといったBIツールも、ExcelのPower Queryと同様に、ODBC経由でSQLiteデータベースに接続できます。これにより、インタラクティブなダッシュボードの作成や、より高度なデータ分析が可能になります。</p>
+<h3 id="基本的な接続アプローチ">基本的な接続アプローチ</h3>
+<p>BIツールからSQLiteに接続する基本的な流れは、Excelの場合とほぼ同じです。</p>
+<ol>
+<li>各BIツールのデータ接続機能から「<strong>ODBC</strong>」または「<strong>汎用ODBC</strong>」を選択します。</li>
+<li>接続設定画面で、<strong>接続文字列</strong>（<code>DRIVER=SQLite3 ODBC Driver;Database=...;</code>）を指定して接続します。</li>
+<li>接続が成功すると、データベース内のテーブルとビューが一覧表示され、データモデルに取り込むことができます。</li>
+</ol>
+<p><strong>Power BIでの接続例</strong>
+Power BI Desktopで「データを取得」→「その他」→「ODBC」を選択し、接続文字列を入力します。</p>
+<p><code>[画像: Power BIのデータ取得画面。ODBCを選択している様子]</code></p>
+<p><strong>Tableauでの接続例</strong>
+Tableau Desktopで「接続」→「その他のデータベース (ODBC)」を選択し、ドライバー（SQLite3 ODBC Driver）とデータベースファイルパスを指定します。</p>
+<p><code>[画像: TableauのODBC接続画面]</code></p>
+
+<div class="info-box tip">
+  <div class="info-box-title">パフォーマンスに関する考慮事項</div>
+  <p><p>BIツールで大量のデータを扱う場合、ODBC接続のパフォーマンスがボトルネックになることがあります。</p>
+<ul>
+<li><strong>インポートモード</strong>: データをBIツール内に取り込むモード。取り込み後は高速に動作しますが、データ量が多いとメモリを消費します。</li>
+<li><strong>DirectQueryモード</strong>: 都度データベースにクエリを発行するモード。常に最新のデータを見れますが、操作のたびにクエリが実行されるため、データベース側のパフォーマンス（特にインデックス）が重要になります。</li>
 </ul>
-
-  </ul>
+<p>SQLiteはファイルベースのDBであるため、一般的には「<strong>インポートモード</strong>」での利用が推奨されます。</p>
+</p>
 </div>
-<p>データ分析は、SQLを書いて結果を眺めるだけでは終わりません。その結果をレポートとしてまとめ、関係者と共有し、次のビジネスアクションに繋げてこそ価値が生まれます。</p>
-<p>この最終章では、SQLiteで処理したデータを、最も身近なレポートツールである <strong>Excel</strong> や、より高度な可視化を得意とする <strong>BI (ビジネスインテリジェンス) ツール</strong> と連携させる方法を学びます。特に、ExcelのPower Query機能を使えば、手作業でのデータ更新から解放され、レポートの自動化を実現できます。これまで学んだスキルを実務で最大限に活かすための、最後の仕上げです。</p>
+<p>SQLiteとBIツールを組み合わせることで、個人や小規模チームでも、低コストで本格的なデータ可視化環境を構築することが可能です。</p>
 
 </div>
 
@@ -267,12 +276,6 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
 
@@ -281,60 +284,14 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
-
-  <div class="section-list">
-      <h3>この章のコンテンツ</h3>
-      <ul class="chapter-list">
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/1_a5_export/" class="chapter-link">
-                    10.1 A5 SQL:Mk2からのデータエクスポート
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/2_excel_powerquery/" class="chapter-link">
-                    10.2 Excel (Power Query) との連携
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/3_bi_tools/" class="chapter-link">
-                    10.3 BIツールとの連携
-                </a>
-              
-          </li>
-      
-      </ul>
-  </div>
 
 
 <div class="nav-buttons">
     
     
-        <a href="/chapter9/" class="nav-btn prev">← 前へ: 第9章 生成AI活用（ChatGPT）</a>
+        <a href="/chapter10/2_excel_powerquery/" class="nav-btn prev">← 前へ: 10.2 Excel (Power Query) との連携</a>
     
 
     

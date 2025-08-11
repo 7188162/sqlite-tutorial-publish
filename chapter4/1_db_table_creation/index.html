@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第10章 データ出力・連携（Excel・BIツール） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>4.1 テーブルの作成 | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
     
@@ -34,27 +34,9 @@
 
 
 
-  
-  
-  
-    
-  
-
 
 
   
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
   
     
   
@@ -77,9 +59,9 @@
 
   <div class="progress-container">
       <div class="progress-bar">
-          <div class="progress-fill" style="width: 100%;"></div>
+          <div class="progress-fill" style="width: 40%;"></div>
       </div>
-      <span>進捗: 100% (10/10章)</span>
+      <span>進捗: 40% (4/10章)</span>
   </div>
 
 
@@ -232,34 +214,50 @@
     
       
     
+      
+        <a href="/chapter4/">第4章 基本操作（ビュー作成含む）</a> &gt;
+      
     
-    <span>第10章 データ出力・連携（Excel・BIツール）</span>
+    
+    <span>4.1 テーブルの作成</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第10章 データ出力・連携（Excel・BIツール）</h1>
+    <h1 class="content-title">4.1 テーブルの作成</h1>
     
-    <p class="content-subtitle">分析結果を次のアクションへ！レポートと可視化の世界</p>
+    <p class="content-subtitle">A5 SQL:Mk2のGUIで直感的にテーブルを設計します</p>
     
 </div>
 
 <div class="content-body">
-    
-<div class="learning-objectives">
-  <h3>📚 この章で学習すること</h3>
-  <ul class="objectives-list">
-    <ul>
-<li>A5 SQL:Mk2から分析結果をCSVやExcelファイルとしてエクスポートする</li>
-<li>ExcelのPower Queryを使い、SQLiteデータベースから直接データを取得・更新する</li>
-<li>既存のExcelレポートのデータソースを、AccessからSQLiteに切り替える</li>
-<li>Power BIなどのBIツールとSQLiteを連携させるための基本的な考え方を理解する</li>
+    <p>データベースにデータを格納するには、まず器となる「テーブル」を作成する必要があります。</p>
+<ol>
+<li>A5 SQL:Mk2のデータベースエクスプローラで、対象のデータベース（例: <code>売上管理DB</code>）を右クリックし、「テーブルの作成」を選択します。</li>
+</ol>
+<p><code>[画像: A5 SQL:Mk2の右クリックメニュー。「テーブルの作成」をハイライト]</code></p>
+<ol start="2">
+<li>テーブル作成ウィンドウが開きます。Accessのテーブルデザインビューによく似た画面です。</li>
+<li>画面下部のグリッドに、テーブルに含めたい列（フィールド）の情報を入力していきます。
+<ul>
+<li><strong>物理名</strong>: 列の物理的な名前です。通常は半角英数字を使います（例: <code>SaleID</code>, <code>SaleDate</code>, <code>ProductID</code>）。</li>
+<li><strong>論理名</strong>: 列の日本語名や説明です（例: <code>売上ID</code>, <code>販売日</code>, <code>商品ID</code>）。A5 SQL:Mk2が自動でコメントとしてSQLに追加してくれます。</li>
+<li><strong>データ型</strong>: <code>INTEGER</code> (整数), <code>REAL</code> (数値), <code>TEXT</code> (文字列), <code>BLOB</code> (バイナリ) から選択します。日付や時刻も <code>TEXT</code> や <code>INTEGER</code> で格納するのが一般的です。</li>
+<li><strong>Not Null</strong>: Accessの「値要求」に相当します。チェックすると、この列に空の値（NULL）を入れることができなくなります。</li>
+<li><strong>PK</strong>: 主キー（Primary Key）に設定したい列にチェックを入れます。</li>
 </ul>
+</li>
+</ol>
+<p><code>[画像: テーブル作成ウィンドウ。各項目を入力している様子]</code></p>
+<ol start="4">
+<li>ウィンドウ上部の「テーブル物理名」に、テーブルの名前（例: <code>Sales</code>）を入力します。</li>
+<li>設定が完了したら、右下の「実行(F5)」ボタンを押すと、テーブルが作成されます。</li>
+</ol>
 
-  </ul>
+<div class="info-box tip">
+  <div class="info-box-title">SQLプレビュー</div>
+  <p>画面右側の「DDL」タブをクリックすると、GUIでの設定内容がどのような <code>CREATE TABLE</code> 文として実行されるかを確認できます。GUI操作とSQLの対応を学ぶのに非常に役立ちます。</p>
 </div>
-<p>データ分析は、SQLを書いて結果を眺めるだけでは終わりません。その結果をレポートとしてまとめ、関係者と共有し、次のビジネスアクションに繋げてこそ価値が生まれます。</p>
-<p>この最終章では、SQLiteで処理したデータを、最も身近なレポートツールである <strong>Excel</strong> や、より高度な可視化を得意とする <strong>BI (ビジネスインテリジェンス) ツール</strong> と連携させる方法を学びます。特に、ExcelのPower Query機能を使えば、手作業でのデータ更新から解放され、レポートの自動化を実現できます。これまで学んだスキルを実務で最大限に活かすための、最後の仕上げです。</p>
 
 </div>
 
@@ -267,12 +265,6 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
 
@@ -281,65 +273,19 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
-
-  <div class="section-list">
-      <h3>この章のコンテンツ</h3>
-      <ul class="chapter-list">
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/1_a5_export/" class="chapter-link">
-                    10.1 A5 SQL:Mk2からのデータエクスポート
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/2_excel_powerquery/" class="chapter-link">
-                    10.2 Excel (Power Query) との連携
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/3_bi_tools/" class="chapter-link">
-                    10.3 BIツールとの連携
-                </a>
-              
-          </li>
-      
-      </ul>
-  </div>
 
 
 <div class="nav-buttons">
     
     
-        <a href="/chapter9/" class="nav-btn prev">← 前へ: 第9章 生成AI活用（ChatGPT）</a>
+        
     
 
     
     
-        
+        <a href="/chapter4/2_data_import/" class="nav-btn next">次へ: 4.2 CSVからのデータインポート →</a>
     
 </div>
 

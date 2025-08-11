@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.3 パススルークエリで性能を最大化 | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    
+    <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
+    
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+    <div class="header-content">
+        <div class="header-title">
+            <h1><a href="/">SQLite &#43; A5 SQL:Mk2 学習サイト</a></h1>
+            <span class="header-subtitle">SQLiteを用いた効率的データ分析</span>
+        </div>
+        
+        <button id="menu-toggle" class="menu-toggle" aria-label="ナビゲーションを開く">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+    </div>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+      
+      
+
+
+
+
+
+  
+
+
+
+
+  <div class="progress-container">
+      <div class="progress-bar">
+          <div class="progress-fill" style="width: 30%;"></div>
+      </div>
+      <span>進捗: 30% (3/10章)</span>
+  </div>
+
+
+</header>
+        
+
+
+
+<nav class="sidebar">
+    <div class="nav-section">
+        <h3>学習コース</h3>
+        <ul class="chapter-list">
+            
+
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter1/" class="chapter-link ">
+                    <span class="chapter-number">1</span>
+                    <span>第1章 移行メリット詳細</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter2/" class="chapter-link ">
+                    <span class="chapter-number">2</span>
+                    <span>第2章 環境構築</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter3/" class="chapter-link ">
+                    <span class="chapter-number">3</span>
+                    <span>第3章 ハイブリッド運用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter4/" class="chapter-link ">
+                    <span class="chapter-number">4</span>
+                    <span>第4章 基本操作</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter5/" class="chapter-link ">
+                    <span class="chapter-number">5</span>
+                    <span>第5章 クエリ基礎</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter6/" class="chapter-link ">
+                    <span class="chapter-number">6</span>
+                    <span>第6章 クエリ応用技術</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter7/" class="chapter-link ">
+                    <span class="chapter-number">7</span>
+                    <span>第7章 インデックス最適化</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter8/" class="chapter-link ">
+                    <span class="chapter-number">8</span>
+                    <span>第8章 実践的分析手法</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter9/" class="chapter-link ">
+                    <span class="chapter-number">9</span>
+                    <span>第9章 生成AI活用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter10/" class="chapter-link ">
+                    <span class="chapter-number">10</span>
+                    <span>第10章 データ出力・連携</span>
+                </a>
+            </li>
+            
+
+            
+        </ul>
+    </div>
+</nav>
+        
+        <main class="main">
+            
+
+
+
+
+
+<div class="breadcrumb">
+  
+
+  
+  
+    <a href="/">ホーム</a> &gt;
+  
+
+  
+
+  
+    
+      
+    
+      
+        <a href="/chapter3/">第3章 ハイブリッド運用（ODBC・パススルークエリ）</a> &gt;
+      
+    
+    
+    <span>3.3 パススルークエリで性能を最大化</span>
+  
+</div>
+
+<div class="content-header">
+    <h1 class="content-title">3.3 パススルークエリで性能を最大化</h1>
+    
+    <p class="content-subtitle">重い処理はSQLiteに直接命令して高速化しよう</p>
+    
+</div>
+
+<div class="content-body">
+    <p>リンクテーブルは非常に便利ですが、Access上で複雑なクエリ（特に集計や複数テーブルのJOIN）を実行すると、Accessのクエリエンジンがデータを一つ一つSQLiteに問い合わせるため、非効率になることがあります。</p>
+<p>そこで登場するのが「<strong>パススルー クエリ</strong>」です。これは、Accessのエンジンを介さず、SQL文を<strong>そのままSQLiteに直接送りつけて実行させる</strong>機能です。これにより、SQLite本来の高速な処理能力を最大限に引き出すことができます。</p>
+<h3 id="パススルークエリの作成方法">パススルークエリの作成方法</h3>
+<ol>
+<li>Accessのリボンで「作成」タブ → 「クエリ デザイン」をクリックします。</li>
+<li>「テーブルの表示」ウィンドウはすぐに閉じます。</li>
+<li>デザインビューの上部にある「<strong>パススルー</strong>」アイコンをクリックします。</li>
+</ol>
+<p><code>[画像: Accessのクエリデザインビュー。「パススルー」アイコンをハイライト]</code></p>
+<ol start="4">
+<li>SQLビューに切り替わります。ここに、<strong>SQLiteの構文で</strong>SQLを記述します。</li>
+<li>プロパティシート（F4キーで表示）を開き、「<strong>ODBC 接続文字列</strong>」を設定します。
+<ul>
+<li>「&hellip;」ボタンをクリックし、前セクションで設定した時と同様に、データソース（SQLite3 ODBC Driverとデータベースファイル）を選択します。</li>
+<li>一度設定すると、<code>ODBC;DRIVER=SQLite3 ODBC Driver;Database=C:\MyData\sales.db;...</code> のような文字列が自動で入力されます。</li>
+</ul>
+</li>
+</ol>
+<p><code>[画像: パススルークエリのプロパティシート。ODBC接続文字列の設定箇所をハイライト]</code></p>
+<h3 id="パススルークエリの活用例">パススルークエリの活用例</h3>
+<p>例えば、「月別の売上合計」を計算する重い処理を考えます。</p>
+
+<div class="code-block-container">
+  <div class="code-header">SQLite用パススルークエリの例</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-- このSQLはAccessではなく、SQLite側で実行される
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">WITH</span><span class="w"> </span><span class="n">monthly_sales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">販売日</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">販売月</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="err">金額</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="err">合計金額</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">FROM</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">T_売上</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m&#39;</span><span class="p">,</span><span class="w"> </span><span class="err">販売日</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">販売月</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">合計金額</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">monthly_sales</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">販売月</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>  
+</div>
+
+<div class="info-box warning">
+  <div class="info-box-title">重要：構文の違いに注意！</div>
+  <p>パススルークエリ内では、Accessの関数（<code>Format()</code>など）は使えません。SQLiteの関数（<code>strftime()</code>など）を使う必要があります。これは、SQLが直接SQLiteに送られるためです。</p>
+</div>
+<p>このクエリを実行すると、計算はすべてSQLite側で一括して行われ、Accessはその<strong>結果だけ</strong>を受け取ります。データ件数が数万件以上の場合、リンクテーブルに対してAccessのクエリを実行するよりも劇的に高速化されることを体感できるでしょう。</p>
+
+</div>
+
+
+
+  
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+<div class="nav-buttons">
+    
+    
+        <a href="/chapter3/2_access_linking/" class="nav-btn prev">← 前へ: 3.2 Accessからリンクテーブルで接続</a>
+    
+
+    
+    
+        
+    
+</div>
+
+        </main>
+        
+        <footer class="footer">
+    <p>&copy; 2025 SQLite&#43;A5 SQL:Mk2 学習サイト</p>
+</footer>
+    </div>
+    
+    <script src="/js/main.min.6a80bd6c365613ae74ea9b9c1b373baf4fed41b11102bab2731a165dda73a8a3.js" defer></script>
+
+    
+  
+  
+
+</body>
+</html>

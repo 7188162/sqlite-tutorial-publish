@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第10章 データ出力・連携（Excel・BIツール） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>4.2 CSVからのデータインポート | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
     
@@ -34,27 +34,9 @@
 
 
 
-  
-  
-  
-    
-  
-
 
 
   
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
   
     
   
@@ -77,9 +59,9 @@
 
   <div class="progress-container">
       <div class="progress-bar">
-          <div class="progress-fill" style="width: 100%;"></div>
+          <div class="progress-fill" style="width: 40%;"></div>
       </div>
-      <span>進捗: 100% (10/10章)</span>
+      <span>進捗: 40% (4/10章)</span>
   </div>
 
 
@@ -232,46 +214,52 @@
     
       
     
+      
+        <a href="/chapter4/">第4章 基本操作（ビュー作成含む）</a> &gt;
+      
     
-    <span>第10章 データ出力・連携（Excel・BIツール）</span>
+    
+    <span>4.2 CSVからのデータインポート</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第10章 データ出力・連携（Excel・BIツール）</h1>
+    <h1 class="content-title">4.2 CSVからのデータインポート</h1>
     
-    <p class="content-subtitle">分析結果を次のアクションへ！レポートと可視化の世界</p>
+    <p class="content-subtitle">Excelなどで用意したデータをテーブルに一括で取り込みます</p>
     
 </div>
 
 <div class="content-body">
-    
-<div class="learning-objectives">
-  <h3>📚 この章で学習すること</h3>
-  <ul class="objectives-list">
-    <ul>
-<li>A5 SQL:Mk2から分析結果をCSVやExcelファイルとしてエクスポートする</li>
-<li>ExcelのPower Queryを使い、SQLiteデータベースから直接データを取得・更新する</li>
-<li>既存のExcelレポートのデータソースを、AccessからSQLiteに切り替える</li>
-<li>Power BIなどのBIツールとSQLiteを連携させるための基本的な考え方を理解する</li>
+    <p>空のテーブルができたので、次にデータを投入します。Excelなどで作成・保存したCSVファイルから、データを一括でインポートするのが最も簡単な方法です。</p>
+<ol>
+<li>データベースエクスプローラで、インポート先のテーブルを右クリックし、「CSV/TSVインポート」を選択します。</li>
+</ol>
+<p><code>[画像: テーブルの右クリックメニュー。「CSV/TSVインポート」をハイライト]</code></p>
+<ol start="2">
+<li>インポートウィザードが開きます。
+<ul>
+<li><strong>インポートファイル</strong>: 「&hellip;」ボタンを押し、インポートしたいCSVファイルを選択します。</li>
+<li><strong>エンコーディング</strong>: 日本語が含まれる場合は「<strong>UTF-8</strong>」または「<strong>Shift_JIS</strong>」を選択します。文字化けする場合は、もう一方を試してください。</li>
+<li><strong>先頭行はカラム名</strong>: CSVファイルの1行目が見出し行の場合は、チェックを入れます。</li>
 </ul>
+</li>
+</ol>
+<p><code>[画像: インポートウィザードのステップ1。ファイル選択とエンコーディング設定]</code></p>
+<ol start="3">
+<li>「次へ」進むと、インポートデータのプレビューと、インポート元（CSVの列）と先（テーブルの列）のマッピングが表示されます。列名が同じであれば、自動で正しくマッピングされます。</li>
+</ol>
+<p><code>[画像: インポートウィザードのステップ2。列のマッピング確認画面]</code></p>
+<ol start="4">
+<li>「インポート開始」ボタンを押すと、処理が実行されます。「〇件のインポートに成功しました」と表示されれば完了です。</li>
+<li>テーブルをダブルクリックしてデータを開き、正しくデータが取り込まれているか確認しましょう。</li>
+</ol>
 
-  </ul>
 </div>
-<p>データ分析は、SQLを書いて結果を眺めるだけでは終わりません。その結果をレポートとしてまとめ、関係者と共有し、次のビジネスアクションに繋げてこそ価値が生まれます。</p>
-<p>この最終章では、SQLiteで処理したデータを、最も身近なレポートツールである <strong>Excel</strong> や、より高度な可視化を得意とする <strong>BI (ビジネスインテリジェンス) ツール</strong> と連携させる方法を学びます。特に、ExcelのPower Query機能を使えば、手作業でのデータ更新から解放され、レポートの自動化を実現できます。これまで学んだスキルを実務で最大限に活かすための、最後の仕上げです。</p>
-
-</div>
 
 
 
   
-  
-    
-  
-    
-  
-    
   
 
 
@@ -281,65 +269,19 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
-
-  <div class="section-list">
-      <h3>この章のコンテンツ</h3>
-      <ul class="chapter-list">
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/1_a5_export/" class="chapter-link">
-                    10.1 A5 SQL:Mk2からのデータエクスポート
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/2_excel_powerquery/" class="chapter-link">
-                    10.2 Excel (Power Query) との連携
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/3_bi_tools/" class="chapter-link">
-                    10.3 BIツールとの連携
-                </a>
-              
-          </li>
-      
-      </ul>
-  </div>
 
 
 <div class="nav-buttons">
     
     
-        <a href="/chapter9/" class="nav-btn prev">← 前へ: 第9章 生成AI活用（ChatGPT）</a>
+        <a href="/chapter4/1_db_table_creation/" class="nav-btn prev">← 前へ: 4.1 テーブルの作成</a>
     
 
     
     
-        
+        <a href="/chapter4/3_view_creation/" class="nav-btn next">次へ: 4.3 ビューの作成（Accessクエリの代替） →</a>
     
 </div>
 

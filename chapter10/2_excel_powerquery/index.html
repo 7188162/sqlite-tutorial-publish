@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第10章 データ出力・連携（Excel・BIツール） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>10.2 Excel (Power Query) との連携 | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
     
@@ -33,12 +33,6 @@
 
 
 
-
-  
-  
-  
-    
-  
 
 
 
@@ -232,34 +226,72 @@
     
       
     
+      
+        <a href="/chapter10/">第10章 データ出力・連携（Excel・BIツール）</a> &gt;
+      
     
-    <span>第10章 データ出力・連携（Excel・BIツール）</span>
+    
+    <span>10.2 Excel (Power Query) との連携</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第10章 データ出力・連携（Excel・BIツール）</h1>
+    <h1 class="content-title">10.2 Excel (Power Query) との連携</h1>
     
-    <p class="content-subtitle">分析結果を次のアクションへ！レポートと可視化の世界</p>
+    <p class="content-subtitle">レポートを自動更新！手作業でのコピー＆ペーストはもう不要です</p>
     
 </div>
 
 <div class="content-body">
-    
-<div class="learning-objectives">
-  <h3>📚 この章で学習すること</h3>
-  <ul class="objectives-list">
-    <ul>
-<li>A5 SQL:Mk2から分析結果をCSVやExcelファイルとしてエクスポートする</li>
-<li>ExcelのPower Queryを使い、SQLiteデータベースから直接データを取得・更新する</li>
-<li>既存のExcelレポートのデータソースを、AccessからSQLiteに切り替える</li>
-<li>Power BIなどのBIツールとSQLiteを連携させるための基本的な考え方を理解する</li>
+    <p>毎回データを手動でエクスポートするのは手間がかかります。Excelの<strong>Power Query</strong>（「データの取得と変換」機能）を使えば、SQLiteデータベースに直接接続し、ボタン一つで最新のデータを取得できるようになります。</p>
+<h3 id="power-queryでの接続手順">Power Queryでの接続手順</h3>
+<ol>
+<li>Excelを開き、リボンの「データ」タブ → 「データの取得」 → 「データベースから」 → 「<strong>ODBCから</strong>」を選択します。
+※この機能を使うには、第3章でインストールした<strong>SQLite ODBCドライバ</strong>が必要です。</li>
+</ol>
+<p><code>[画像: Excelのデータタブ。「ODBCから」を選択する箇所をハイライト]</code></p>
+<ol start="2">
+<li>「ODBCから」ウィンドウが開きます。
+<ul>
+<li>「データソース名(DSN)」のプルダウンから「<strong>&lt;なし&gt;</strong>」を選択します。</li>
+<li>「詳細設定オプション」を展開し、「<strong>接続文字列</strong>」に以下の形式で入力します。データベースファイルのパスは、ご自身の環境に合わせて変更してください。</li>
 </ul>
+</li>
+</ol>
+<p><code>[画像: ExcelのODBC接続ウィンドウ。接続文字列の入力欄を指し示す]</code></p>
 
-  </ul>
+<div class="code-block-container">
+  <div class="code-header">ODBC接続文字列の例</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">DRIVER=SQLite3 ODBC Driver;Database=C:\MyData\sales.db;
+</span></span></code></pre></td></tr></table>
 </div>
-<p>データ分析は、SQLを書いて結果を眺めるだけでは終わりません。その結果をレポートとしてまとめ、関係者と共有し、次のビジネスアクションに繋げてこそ価値が生まれます。</p>
-<p>この最終章では、SQLiteで処理したデータを、最も身近なレポートツールである <strong>Excel</strong> や、より高度な可視化を得意とする <strong>BI (ビジネスインテリジェンス) ツール</strong> と連携させる方法を学びます。特に、ExcelのPower Query機能を使えば、手作業でのデータ更新から解放され、レポートの自動化を実現できます。これまで学んだスキルを実務で最大限に活かすための、最後の仕上げです。</p>
+</div>  
+</div>
+<ol start="3">
+<li>「OK」をクリックすると、「ナビゲーター」ウィンドウが開き、SQLiteデータベース内のテーブルやビューの一覧が表示されます。</li>
+<li>取り込みたいテーブルまたはビューを選択し、「読み込み」または「データの変換」をクリックします。
+<ul>
+<li><strong>読み込み</strong>: データを直接Excelシートにテーブルとして読み込みます。</li>
+<li><strong>データの変換</strong>: Power Queryエディタが開き、データの並べ替えやフィルタリング、列の追加などの加工ができます。</li>
+</ul>
+</li>
+</ol>
+<p><code>[画像: Excelのナビゲーターウィンドウ。テーブルやビューが一覧表示されている様子]</code></p>
+<h3 id="データの更新">データの更新</h3>
+<p>一度この接続を設定すれば、データの更新は非常に簡単です。</p>
+<p>「データ」タブの「<strong>すべて更新</strong>」ボタンをクリックするだけで、Excelが自動的にSQLiteデータベースに再接続し、最新のデータを取得してテーブルを更新します。</p>
+
+<div class="info-box access-note">
+  <div class="info-box-title">Accessレポートからの移行</div>
+  <p>これまでAccessのリンクテーブルを元にExcelレポートを作成していた場合、データソースをこのODBC接続に切り替えるだけで、既存のピボットテーブルやグラフをそのまま活かすことができます。</p>
+</div>
 
 </div>
 
@@ -267,12 +299,6 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
 
@@ -281,65 +307,19 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
-
-  <div class="section-list">
-      <h3>この章のコンテンツ</h3>
-      <ul class="chapter-list">
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/1_a5_export/" class="chapter-link">
-                    10.1 A5 SQL:Mk2からのデータエクスポート
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/2_excel_powerquery/" class="chapter-link">
-                    10.2 Excel (Power Query) との連携
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/3_bi_tools/" class="chapter-link">
-                    10.3 BIツールとの連携
-                </a>
-              
-          </li>
-      
-      </ul>
-  </div>
 
 
 <div class="nav-buttons">
     
     
-        <a href="/chapter9/" class="nav-btn prev">← 前へ: 第9章 生成AI活用（ChatGPT）</a>
+        <a href="/chapter10/1_a5_export/" class="nav-btn prev">← 前へ: 10.1 A5 SQL:Mk2からのデータエクスポート</a>
     
 
     
     
-        
+        <a href="/chapter10/3_bi_tools/" class="nav-btn next">次へ: 10.3 BIツールとの連携 →</a>
     
 </div>
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第10章 データ出力・連携（Excel・BIツール） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>7.1 インデックスの仕組み | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
     
@@ -34,21 +34,9 @@
 
 
 
-  
-  
-  
-    
-  
-
 
 
   
-  
-    
-  
-    
-  
-    
   
     
   
@@ -77,9 +65,9 @@
 
   <div class="progress-container">
       <div class="progress-bar">
-          <div class="progress-fill" style="width: 100%;"></div>
+          <div class="progress-fill" style="width: 70%;"></div>
       </div>
-      <span>進捗: 100% (10/10章)</span>
+      <span>進捗: 70% (7/10章)</span>
   </div>
 
 
@@ -232,34 +220,49 @@
     
       
     
+      
+        <a href="/chapter7/">第7章 インデックス最適化</a> &gt;
+      
     
-    <span>第10章 データ出力・連携（Excel・BIツール）</span>
+    
+    <span>7.1 インデックスの仕組み</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第10章 データ出力・連携（Excel・BIツール）</h1>
+    <h1 class="content-title">7.1 インデックスの仕組み</h1>
     
-    <p class="content-subtitle">分析結果を次のアクションへ！レポートと可視化の世界</p>
+    <p class="content-subtitle">なぜ速くなる？本の「索引」で理解しよう</p>
     
 </div>
 
 <div class="content-body">
-    
-<div class="learning-objectives">
-  <h3>📚 この章で学習すること</h3>
-  <ul class="objectives-list">
-    <ul>
-<li>A5 SQL:Mk2から分析結果をCSVやExcelファイルとしてエクスポートする</li>
-<li>ExcelのPower Queryを使い、SQLiteデータベースから直接データを取得・更新する</li>
-<li>既存のExcelレポートのデータソースを、AccessからSQLiteに切り替える</li>
-<li>Power BIなどのBIツールとSQLiteを連携させるための基本的な考え方を理解する</li>
+    <p>インデックスがないデータベースは、目的の単語を探すために辞書を1ページ目から最後まで順番にめくっていくようなものです。これを「<strong>フルテーブルスキャン</strong>」と呼び、データが増えるほど時間がかかります。</p>
+<p>一方、インデックスを作成すると、データベースは内部に特別な索引ページ（B-Treeというデータ構造）を作ります。</p>
+<p><strong>例：<code>Employees</code>テーブルの<code>DepartmentID</code>列にインデックスを作成した場合</strong></p>
+<ol>
+<li>データベースは<code>DepartmentID</code>の値と、その値を持つ行の物理的な場所（住所）をペアにした索引リストを作成します。</li>
+<li>このリストは<code>DepartmentID</code>の値でソートされています。
+<ul>
+<li><code>(101, [住所A, 住所C, ...])</code></li>
+<li><code>(102, [住所B, 住所F, ...])</code></li>
+<li><code>(103, [住所D, 住所E, ...])</code></li>
 </ul>
+</li>
+<li><code>WHERE DepartmentID = 102</code> というクエリが来ると、データベースはテーブル全体を探す代わりに、このソート済みの索引を高速に検索（二分探索）して<code>102</code>の項目を見つけます。</li>
+<li>そこに記録されている「住所B, 住所F, &hellip;」を元に、テーブルから目的の行だけを直接取得します。</li>
+</ol>
+<p>この仕組みにより、全データをスキャンすることなく、目的のデータにピンポイントでアクセスできるため、検索速度が劇的に向上するのです。</p>
 
-  </ul>
+<div class="info-box warning">
+  <div class="info-box-title">インデックスの代償</div>
+  <p><p>インデックスは検索を高速化しますが、代償もあります。</p>
+<ul>
+<li><strong>ディスク容量の増加</strong>: 索引を保存するための追加のディスク容量が必要です。</li>
+<li><strong>書き込み速度の低下</strong>: データの追加・更新・削除時には、テーブル本体だけでなくインデックスも更新する必要があるため、書き込み処理はわずかに遅くなります。
+検索パフォーマンスの向上が、この代償を上回る場合にインデックスを作成するのが基本です。</li>
+</ul></p>
 </div>
-<p>データ分析は、SQLを書いて結果を眺めるだけでは終わりません。その結果をレポートとしてまとめ、関係者と共有し、次のビジネスアクションに繋げてこそ価値が生まれます。</p>
-<p>この最終章では、SQLiteで処理したデータを、最も身近なレポートツールである <strong>Excel</strong> や、より高度な可視化を得意とする <strong>BI (ビジネスインテリジェンス) ツール</strong> と連携させる方法を学びます。特に、ExcelのPower Query機能を使えば、手作業でのデータ更新から解放され、レポートの自動化を実現できます。これまで学んだスキルを実務で最大限に活かすための、最後の仕上げです。</p>
 
 </div>
 
@@ -267,12 +270,6 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
 
@@ -281,65 +278,19 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
-
-  <div class="section-list">
-      <h3>この章のコンテンツ</h3>
-      <ul class="chapter-list">
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/1_a5_export/" class="chapter-link">
-                    10.1 A5 SQL:Mk2からのデータエクスポート
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/2_excel_powerquery/" class="chapter-link">
-                    10.2 Excel (Power Query) との連携
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/3_bi_tools/" class="chapter-link">
-                    10.3 BIツールとの連携
-                </a>
-              
-          </li>
-      
-      </ul>
-  </div>
 
 
 <div class="nav-buttons">
     
     
-        <a href="/chapter9/" class="nav-btn prev">← 前へ: 第9章 生成AI活用（ChatGPT）</a>
+        
     
 
     
     
-        
+        <a href="/chapter7/2_how_to_create/" class="nav-btn next">次へ: 7.2 インデックスの作成方法 →</a>
     
 </div>
 

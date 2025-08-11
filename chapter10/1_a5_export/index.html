@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第10章 データ出力・連携（Excel・BIツール） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>10.1 A5 SQL:Mk2からのデータエクスポート | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
     
@@ -33,12 +33,6 @@
 
 
 
-
-  
-  
-  
-    
-  
 
 
 
@@ -232,46 +226,60 @@
     
       
     
+      
+        <a href="/chapter10/">第10章 データ出力・連携（Excel・BIツール）</a> &gt;
+      
     
-    <span>第10章 データ出力・連携（Excel・BIツール）</span>
+    
+    <span>10.1 A5 SQL:Mk2からのデータエクスポート</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第10章 データ出力・連携（Excel・BIツール）</h1>
+    <h1 class="content-title">10.1 A5 SQL:Mk2からのデータエクスポート</h1>
     
-    <p class="content-subtitle">分析結果を次のアクションへ！レポートと可視化の世界</p>
+    <p class="content-subtitle">クエリ結果を、手軽にCSVやExcelファイルで保存します</p>
     
 </div>
 
 <div class="content-body">
-    
-<div class="learning-objectives">
-  <h3>📚 この章で学習すること</h3>
-  <ul class="objectives-list">
-    <ul>
-<li>A5 SQL:Mk2から分析結果をCSVやExcelファイルとしてエクスポートする</li>
-<li>ExcelのPower Queryを使い、SQLiteデータベースから直接データを取得・更新する</li>
-<li>既存のExcelレポートのデータソースを、AccessからSQLiteに切り替える</li>
-<li>Power BIなどのBIツールとSQLiteを連携させるための基本的な考え方を理解する</li>
+    <p>分析結果をサッとファイルに保存したい場合、A5 SQL:Mk2のエクスポート機能が最も手軽で便利です。</p>
+<h3 id="エクスポート手順">エクスポート手順</h3>
+<ol>
+<li>A5 SQL:Mk2のSQLエディタで、出力したいクエリを実行します。</li>
+<li>下部に表示された結果グリッドの上で右クリックし、「 <strong>グリッドの内容をファイルに出力</strong> 」を選択します。</li>
+</ol>
+<p><code>[画像: A5 SQL:Mk2の結果グリッド右クリックメニュー。「グリッドの内容をファイルに出力」をハイライト]</code></p>
+<ol start="3">
+<li>「ファイルへエクスポート」ウィンドウが開きます。ここで出力形式やオプションを細かく設定できます。
+<ul>
+<li><strong>ファイル形式</strong>: 「CSV」や「Excelブック (*.xlsx)」など、目的に応じて選択します。</li>
+<li><strong>ファイル名</strong>: 出力先のファイルパスとファイル名を指定します。</li>
+<li><strong>オプション (CSVの場合)</strong>:
+<ul>
+<li><code>エンコーディング</code>: 日本語を含む場合は <code>UTF-8 (BOM付)</code> または <code>Shift_JIS</code> を選択すると、Excelで文字化けしにくくなります。</li>
+<li><code>カラム名をヘッダとして出力する</code>: 通常はチェックを入れます。</li>
 </ul>
+</li>
+<li><strong>オプション (Excelの場合)</strong>:
+<ul>
+<li><code>シート名</code>: 出力先のシート名を指定できます。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><code>[画像: ファイルへエクスポートウィンドウ。設定項目をハイライト]</code></p>
+<ol start="4">
+<li>「エクスポート」ボタンをクリックすると、ファイルが生成されます。</li>
+</ol>
+<p>この方法は、単発のレポート作成や、他の人にデータを渡す際に非常に役立ちます。</p>
 
-  </ul>
 </div>
-<p>データ分析は、SQLを書いて結果を眺めるだけでは終わりません。その結果をレポートとしてまとめ、関係者と共有し、次のビジネスアクションに繋げてこそ価値が生まれます。</p>
-<p>この最終章では、SQLiteで処理したデータを、最も身近なレポートツールである <strong>Excel</strong> や、より高度な可視化を得意とする <strong>BI (ビジネスインテリジェンス) ツール</strong> と連携させる方法を学びます。特に、ExcelのPower Query機能を使えば、手作業でのデータ更新から解放され、レポートの自動化を実現できます。これまで学んだスキルを実務で最大限に活かすための、最後の仕上げです。</p>
-
-</div>
 
 
 
   
-  
-    
-  
-    
-  
-    
   
 
 
@@ -281,65 +289,19 @@
 
   
   
-    
-  
-    
-  
-    
-  
 
 
-
-  <div class="section-list">
-      <h3>この章のコンテンツ</h3>
-      <ul class="chapter-list">
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/1_a5_export/" class="chapter-link">
-                    10.1 A5 SQL:Mk2からのデータエクスポート
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/2_excel_powerquery/" class="chapter-link">
-                    10.2 Excel (Power Query) との連携
-                </a>
-              
-          </li>
-      
-          <li class="chapter-item">
-              
-                
-                
-                
-                <a href="/chapter10/3_bi_tools/" class="chapter-link">
-                    10.3 BIツールとの連携
-                </a>
-              
-          </li>
-      
-      </ul>
-  </div>
 
 
 <div class="nav-buttons">
     
     
-        <a href="/chapter9/" class="nav-btn prev">← 前へ: 第9章 生成AI活用（ChatGPT）</a>
+        
     
 
     
     
-        
+        <a href="/chapter10/2_excel_powerquery/" class="nav-btn next">次へ: 10.2 Excel (Power Query) との連携 →</a>
     
 </div>
 
