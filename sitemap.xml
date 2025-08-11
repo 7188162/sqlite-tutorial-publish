@@ -2,67 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter10/1_a5_export/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter2/1_install/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter3/1_odbc_setup/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter4/1_db_table_creation/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter5/1_select_where/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter6/1_cte/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter7/1_what_is_index/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter8/1_crosstab_case/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter9/1_prompt_engineering/</loc>
-  </url><url>
     <loc>https://sqlite-tutorial.vercel.app/chapter1/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter10/2_excel_powerquery/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter2/2_setup/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter3/2_access_linking/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter4/2_data_import/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter5/2_iif/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter6/2_temp_table/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter7/2_how_to_create/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter8/2_crosstab_iif/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter9/2_use_cases/</loc>
   </url><url>
     <loc>https://sqlite-tutorial.vercel.app/chapter2/</loc>
   </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter10/3_bi_tools/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter2/3_backup/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter3/3_passthrough/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter4/3_view_creation/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter5/3_coalesce_case/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter6/3_if_exists/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter7/3_how_to_evaluate/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter8/3_advanced_analysis/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter9/3_prompt_templates/</loc>
-  </url><url>
     <loc>https://sqlite-tutorial.vercel.app/chapter3/</loc>
-  </url><url>
-    <loc>https://sqlite-tutorial.vercel.app/chapter7/4_composite_index/</loc>
   </url><url>
     <loc>https://sqlite-tutorial.vercel.app/chapter4/</loc>
   </url><url>

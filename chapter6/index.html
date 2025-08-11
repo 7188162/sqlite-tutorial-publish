@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第5章 クエリ基礎（IIF, COALESCE, CASE） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    <title>第6章 クエリ応用技術（CTE、一時テーブル、IF EXISTS） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
     
     <link rel="stylesheet" href="/scss/style.min.b2457f3284abc31094ecf2df6daf3f822fbec8e0d99087689847fb4f22bfdbaa.css">
     
@@ -53,6 +53,8 @@
     
   
     
+  
+    
       
       
 
@@ -67,9 +69,9 @@
 
   <div class="progress-container">
       <div class="progress-bar">
-          <div class="progress-fill" style="width: 50%;"></div>
+          <div class="progress-fill" style="width: 60%;"></div>
       </div>
-      <span>進捗: 50% (5/10章)</span>
+      <span>進捗: 60% (6/10章)</span>
   </div>
 
 
@@ -223,14 +225,14 @@
       
     
     
-    <span>第5章 クエリ基礎（IIF, COALESCE, CASE）</span>
+    <span>第6章 クエリ応用技術（CTE、一時テーブル、IF EXISTS）</span>
   
 </div>
 
 <div class="content-header">
-    <h1 class="content-title">第5章 クエリ基礎（IIF, COALESCE, CASE）</h1>
+    <h1 class="content-title">第6章 クエリ応用技術（CTE、一時テーブル、IF EXISTS）</h1>
     
-    <p class="content-subtitle">データを自在に加工しよう！SQL関数の基本をマスターする</p>
+    <p class="content-subtitle">複雑なSQLを、もっと見やすく、もっと速く！</p>
     
 </div>
 
@@ -240,16 +242,16 @@
   <h3>📚 この章で学習すること</h3>
   <ul class="objectives-list">
     <ul>
-<li><code>SELECT</code>文と<code>WHERE</code>句の基本と、パフォーマンスを意識した書き方を理解する</li>
-<li>Accessの<code>IIf</code>関数と同じ感覚で使える、SQLiteの<code>IIF</code>関数をマスターする</li>
-<li>NULL値をスマートに扱う<code>COALESCE</code>関数の使い方を学ぶ</li>
-<li>複雑な条件分岐を実現する<code>CASE</code>文を使いこなす</li>
+<li>サブクエリの入れ子地獄から脱却する「CTE（共通テーブル式）」を使いこなす</li>
+<li>複雑なデータ処理の中間結果を保持する「一時テーブル」の活用法を学ぶ</li>
+<li>安全なデータベース操作に不可欠な「IF EXISTS」構文を理解する</li>
+<li>これらの技術を組み合わせて、メンテナンス性の高い分析クエリを構築する</li>
 </ul>
 
   </ul>
 </div>
-<p>テーブルから単にデータを取り出すだけでなく、条件に応じて表示内容を変えたり、値を加工したりしてこそ、データ分析は面白くなります。この章では、そのための強力な武器となるSQLの基本的な関数を学びます。</p>
-<p>特に、Accessでおなじみの<code>IIf</code>関数と同じように使える<code>IIF</code>関数は、すぐにでも活用できる便利な関数です。また、実務データで頻繁に登場する「NULL（空の）値」を効率的に扱う<code>COALESCE</code>関数や、より高度な条件分岐を可能にする<code>CASE</code>文も、分析の幅を大きく広げてくれます。</p>
+<p>基本的なSQLが書けるようになったら、次なるステップは「より複雑な分析」への挑戦です。しかし、複数の集計やテーブル結合を一つのクエリで行おうとすると、サブクエリが何重にも入れ子になり、あっという間に解読不能な「スパゲッティSQL」が出来上がってしまいます。</p>
+<p>この章では、そんなカオスな状況を回避し、ロジカルで読みやすいSQLを書くための強力なテクニックを学びます。特に <strong>CTE (WITH句)</strong> は、近年のデータ分析において必須のスキルとなっています。これらの応用技術をマスターすれば、あなたのSQLスキルは一段上のレベルに到達するでしょう。</p>
 
 </div>
 
@@ -289,8 +291,8 @@
                 
                 
                 
-                <a href="/chapter5/1_select_where/" class="chapter-link">
-                    5.1 SELECT文とWHERE句の基本
+                <a href="/chapter6/1_cte/" class="chapter-link">
+                    6.1 CTE (WITH句) による可読性の向上
                 </a>
               
           </li>
@@ -300,8 +302,8 @@
                 
                 
                 
-                <a href="/chapter5/2_iif/" class="chapter-link">
-                    5.2 IIF関数による条件分岐
+                <a href="/chapter6/2_temp_table/" class="chapter-link">
+                    6.2 一時テーブルの活用
                 </a>
               
           </li>
@@ -311,8 +313,8 @@
                 
                 
                 
-                <a href="/chapter5/3_coalesce_case/" class="chapter-link">
-                    5.3 COALESCEとCASE文
+                <a href="/chapter6/3_if_exists/" class="chapter-link">
+                    6.3 IF EXISTSによる安全な操作
                 </a>
               
           </li>
@@ -324,12 +326,12 @@
 <div class="nav-buttons">
     
     
-        <a href="/chapter4/" class="nav-btn prev">← 前へ: 第4章 基本操作（ビュー作成含む）</a>
+        <a href="/chapter5/" class="nav-btn prev">← 前へ: 第5章 クエリ基礎（IIF, COALESCE, CASE）</a>
     
 
     
     
-        <a href="/chapter6/" class="nav-btn next">次へ: 第6章 クエリ応用技術（CTE、一時テーブル、IF EXISTS） →</a>
+        <a href="/chapter7/" class="nav-btn next">次へ: 第7章 インデックス最適化 →</a>
     
 </div>
 
