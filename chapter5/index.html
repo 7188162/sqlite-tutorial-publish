@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第5章 クエリ基礎（IIF, COALESCE, CASE） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    
+    <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
+    
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+    <div class="header-content">
+        <div class="header-title">
+            <h1><a href="/">SQLite &#43; A5 SQL:Mk2 学習サイト</a></h1>
+            <span class="header-subtitle">SQLiteを用いた効率的データ分析</span>
+        </div>
+        
+        <button id="menu-toggle" class="menu-toggle" aria-label="ナビゲーションを開く">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+    </div>
+    
+    
+    
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      
+      
+
+
+
+
+
+  
+
+
+
+
+  <div class="progress-container">
+      <div class="progress-bar">
+          <div class="progress-fill" style="width: 50%;"></div>
+      </div>
+      <span>進捗: 50% (5/10章)</span>
+  </div>
+
+
+</header>
+        
+
+
+
+<nav class="sidebar">
+    <div class="nav-section">
+        <h3>学習コース</h3>
+        <ul class="chapter-list">
+            
+
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter1/" class="chapter-link ">
+                    <span class="chapter-number">1</span>
+                    <span>第1章 移行メリット詳細</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter2/" class="chapter-link ">
+                    <span class="chapter-number">2</span>
+                    <span>第2章 環境構築</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter3/" class="chapter-link ">
+                    <span class="chapter-number">3</span>
+                    <span>第3章 ハイブリッド運用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter4/" class="chapter-link ">
+                    <span class="chapter-number">4</span>
+                    <span>第4章 基本操作</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter5/" class="chapter-link ">
+                    <span class="chapter-number">5</span>
+                    <span>第5章 クエリ基礎</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter6/" class="chapter-link ">
+                    <span class="chapter-number">6</span>
+                    <span>第6章 クエリ応用技術</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter7/" class="chapter-link ">
+                    <span class="chapter-number">7</span>
+                    <span>第7章 インデックス最適化</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter8/" class="chapter-link ">
+                    <span class="chapter-number">8</span>
+                    <span>第8章 実践的分析手法</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter9/" class="chapter-link ">
+                    <span class="chapter-number">9</span>
+                    <span>第9章 生成AI活用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter10/" class="chapter-link ">
+                    <span class="chapter-number">10</span>
+                    <span>第10章 データ出力・連携</span>
+                </a>
+            </li>
+            
+
+            
+        </ul>
+    </div>
+</nav>
+        
+        <main class="main">
+            
+
+
+
+
+
+<div class="breadcrumb">
+  
+
+  
+  
+    <a href="/">ホーム</a> &gt;
+  
+
+  
+
+  
+    
+      
+    
+    
+    <span>第5章 クエリ基礎（IIF, COALESCE, CASE）</span>
+  
+</div>
+
+<div class="content-header">
+    <h1 class="content-title">第5章 クエリ基礎（IIF, COALESCE, CASE）</h1>
+    
+    <p class="content-subtitle">データを自在に加工しよう！SQL関数の基本をマスターする</p>
+    
+</div>
+
+<div class="content-body">
+    
+<div class="learning-objectives">
+  <h3>📚 この章で学習すること</h3>
+  <ul class="objectives-list">
+    <ul>
+<li><code>SELECT</code>文と<code>WHERE</code>句の基本と、パフォーマンスを意識した書き方を理解する</li>
+<li>Accessの<code>IIf</code>関数と同じ感覚で使える、SQLiteの<code>IIF</code>関数をマスターする</li>
+<li>NULL値をスマートに扱う<code>COALESCE</code>関数の使い方を学ぶ</li>
+<li>複雑な条件分岐を実現する<code>CASE</code>文を使いこなす</li>
+</ul>
+
+  </ul>
+</div>
+<p>テーブルから単にデータを取り出すだけでなく、条件に応じて表示内容を変えたり、値を加工したりしてこそ、データ分析は面白くなります。この章では、そのための強力な武器となるSQLの基本的な関数を学びます。</p>
+<p>特に、Accessでおなじみの<code>IIf</code>関数と同じように使える<code>IIF</code>関数は、すぐにでも活用できる便利な関数です。また、実務データで頻繁に登場する「NULL（空の）値」を効率的に扱う<code>COALESCE</code>関数や、より高度な条件分岐を可能にする<code>CASE</code>文も、分析の幅を大きく広げてくれます。</p>
+
+</div>
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+
+
+  <div class="section-list">
+      <h3>この章のコンテンツ</h3>
+      <ul class="chapter-list">
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter5/1_select_where/" class="chapter-link">
+                    5.1 SELECT文とWHERE句の基本
+                </a>
+              
+          </li>
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter5/2_iif/" class="chapter-link">
+                    5.2 IIF関数による条件分岐
+                </a>
+              
+          </li>
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter5/3_coalesce_case/" class="chapter-link">
+                    5.3 COALESCEとCASE文
+                </a>
+              
+          </li>
+      
+      </ul>
+  </div>
+
+
+<div class="nav-buttons">
+    
+    
+        <a href="/chapter4/" class="nav-btn prev">← 前へ: 第4章 基本操作（ビュー作成含む）</a>
+    
+
+    
+    
+        <a href="/chapter7/" class="nav-btn next">次へ: 第7章 インデックス最適化 →</a>
+    
+</div>
+
+        </main>
+        
+        <footer class="footer">
+    <p>&copy; 2025 SQLite&#43;A5 SQL:Mk2 学習サイト</p>
+</footer>
+    </div>
+    
+    <script src="/js/main.min.6a80bd6c365613ae74ea9b9c1b373baf4fed41b11102bab2731a165dda73a8a3.js" defer></script>
+
+    
+  
+  
+
+</body>
+</html>

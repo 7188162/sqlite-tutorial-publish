@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.1 CTE (WITH句) による可読性の向上 | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    
+    <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
+    
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+    <div class="header-content">
+        <div class="header-title">
+            <h1><a href="/">SQLite &#43; A5 SQL:Mk2 学習サイト</a></h1>
+            <span class="header-subtitle">SQLiteを用いた効率的データ分析</span>
+        </div>
+        
+        <button id="menu-toggle" class="menu-toggle" aria-label="ナビゲーションを開く">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+    </div>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      
+      
+
+
+
+
+
+  
+
+
+
+
+  <div class="progress-container">
+      <div class="progress-bar">
+          <div class="progress-fill" style="width: 60%;"></div>
+      </div>
+      <span>進捗: 60% (6/10章)</span>
+  </div>
+
+
+</header>
+        
+
+
+
+<nav class="sidebar">
+    <div class="nav-section">
+        <h3>学習コース</h3>
+        <ul class="chapter-list">
+            
+
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter1/" class="chapter-link ">
+                    <span class="chapter-number">1</span>
+                    <span>第1章 移行メリット詳細</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter2/" class="chapter-link ">
+                    <span class="chapter-number">2</span>
+                    <span>第2章 環境構築</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter3/" class="chapter-link ">
+                    <span class="chapter-number">3</span>
+                    <span>第3章 ハイブリッド運用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter4/" class="chapter-link ">
+                    <span class="chapter-number">4</span>
+                    <span>第4章 基本操作</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter5/" class="chapter-link ">
+                    <span class="chapter-number">5</span>
+                    <span>第5章 クエリ基礎</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter6/" class="chapter-link ">
+                    <span class="chapter-number">6</span>
+                    <span>第6章 クエリ応用技術</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter7/" class="chapter-link ">
+                    <span class="chapter-number">7</span>
+                    <span>第7章 インデックス最適化</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter8/" class="chapter-link ">
+                    <span class="chapter-number">8</span>
+                    <span>第8章 実践的分析手法</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter9/" class="chapter-link ">
+                    <span class="chapter-number">9</span>
+                    <span>第9章 生成AI活用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter10/" class="chapter-link ">
+                    <span class="chapter-number">10</span>
+                    <span>第10章 データ出力・連携</span>
+                </a>
+            </li>
+            
+
+            
+        </ul>
+    </div>
+</nav>
+        
+        <main class="main">
+            
+
+
+
+
+
+<div class="breadcrumb">
+  
+
+  
+  
+    <a href="/">ホーム</a> &gt;
+  
+
+  
+
+  
+    
+      
+    
+      
+        <a href="/chapter6/">第6章 クエリ応用技術（CTE、一時テーブル、IF EXISTS）</a> &gt;
+      
+    
+    
+    <span>6.1 CTE (WITH句) による可読性の向上</span>
+  
+</div>
+
+<div class="content-header">
+    <h1 class="content-title">6.1 CTE (WITH句) による可読性の向上</h1>
+    
+    <p class="content-subtitle">SQLをパーツに分解して、処理の流れを明確にします</p>
+    
+</div>
+
+<div class="content-body">
+    <p>CTE（Common Table Expression: 共通テーブル式）は、<code>WITH</code>句を使って、クエリの中で一時的に利用できる名前付きの結果セットを定義する機能です。複雑なクエリを、意味のある部品（パーツ）に分解することで、驚くほど可読性が向上します。</p>
+<h3 id="cteの基本構文">CTEの基本構文</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">WITH</span><span class="w"> </span><span class="o">&lt;</span><span class="n">CTE名1</span><span class="o">&gt;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">-- ここにSELECT文を記述
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">CTE名2</span><span class="o">&gt;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">-- 先に定義したCTE名1を利用することも可能
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-- メインのクエリ
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="o">&lt;</span><span class="n">CTE名1</span><span class="o">&gt;</span><span class="w"> </span><span class="p">...</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="使用例サブクエリの書き換え">使用例：サブクエリの書き換え</h3>
+<p>例えば、「部門ごとの売上合計を算出し、全社平均売上を超えている部門だけをリストアップする」という処理を考えます。</p>
+<p><strong>Before: サブクエリを使った読みづらい例</strong>
+
+<div class="code-block-container">
+  <div class="code-header">サブクエリ（可読性△）</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">DepartmentName</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">TotalSales</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">-- まず部門ごとの売上合計を計算
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">  </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">DepartmentName</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">Amount</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalSales</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Employees</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">EmployeeID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">EmployeeID</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Departments</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">DepartmentID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">DepartmentID</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">DepartmentName</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DepartmentSales</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">TotalSales</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">TotalSales</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">-- 平均を出すためにもう一度同じ計算...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">Amount</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalSales</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Employees</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">EmployeeID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">EmployeeID</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">DepartmentID</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">));</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>  
+</div></p>
+<p><strong>After: CTEを使った読みやすい例</strong>
+
+<div class="code-block-container">
+  <div class="code-header">CTE（可読性◎）</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WITH</span><span class="w"> </span><span class="n">DepartmentSales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c1">-- 部品1: 部門ごとの売上合計を計算
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">  </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">DepartmentName</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">Amount</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalSales</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">s</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Employees</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">EmployeeID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">EmployeeID</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Departments</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">DepartmentID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">DepartmentID</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">DepartmentName</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-- メイン処理: 部品1を使って、平均超の部門を抽出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">DepartmentName</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">TotalSales</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">DepartmentSales</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">TotalSales</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">TotalSales</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">DepartmentSales</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>  
+</div></p>
+<p>CTEを使うと、処理のステップが上から下に流れるようになり、「まず何をして、次に何をするか」が一目瞭然になります。また、同じ計算処理を何度も書く必要がなくなり、再利用性が高まるのも大きなメリットです。</p>
+
+</div>
+
+
+
+  
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+<div class="nav-buttons">
+    
+    
+        
+    
+
+    
+    
+        <a href="/chapter6/2_temp_table/" class="nav-btn next">次へ: 6.2 一時テーブルの活用 →</a>
+    
+</div>
+
+        </main>
+        
+        <footer class="footer">
+    <p>&copy; 2025 SQLite&#43;A5 SQL:Mk2 学習サイト</p>
+</footer>
+    </div>
+    
+    <script src="/js/main.min.6a80bd6c365613ae74ea9b9c1b373baf4fed41b11102bab2731a165dda73a8a3.js" defer></script>
+
+    
+  
+  
+
+</body>
+</html>

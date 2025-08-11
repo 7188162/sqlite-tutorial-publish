@@ -1,0 +1,1 @@
+(()=>{document.addEventListener("DOMContentLoaded",function(){const e=document.getElementById("menu-toggle"),t=document.querySelector(".sidebar");e&&t&&e.addEventListener("click",function(){e.classList.toggle("is-active"),t.classList.toggle("is-active")})})})()

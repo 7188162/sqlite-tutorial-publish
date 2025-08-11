@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第4章 基本操作（ビュー作成含む） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    
+    <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
+    
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+    <div class="header-content">
+        <div class="header-title">
+            <h1><a href="/">SQLite &#43; A5 SQL:Mk2 学習サイト</a></h1>
+            <span class="header-subtitle">SQLiteを用いた効率的データ分析</span>
+        </div>
+        
+        <button id="menu-toggle" class="menu-toggle" aria-label="ナビゲーションを開く">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+    </div>
+    
+    
+    
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+      
+      
+
+
+
+
+
+  
+
+
+
+
+  <div class="progress-container">
+      <div class="progress-bar">
+          <div class="progress-fill" style="width: 40%;"></div>
+      </div>
+      <span>進捗: 40% (4/10章)</span>
+  </div>
+
+
+</header>
+        
+
+
+
+<nav class="sidebar">
+    <div class="nav-section">
+        <h3>学習コース</h3>
+        <ul class="chapter-list">
+            
+
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter1/" class="chapter-link ">
+                    <span class="chapter-number">1</span>
+                    <span>第1章 移行メリット詳細</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter2/" class="chapter-link ">
+                    <span class="chapter-number">2</span>
+                    <span>第2章 環境構築</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter3/" class="chapter-link ">
+                    <span class="chapter-number">3</span>
+                    <span>第3章 ハイブリッド運用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter4/" class="chapter-link ">
+                    <span class="chapter-number">4</span>
+                    <span>第4章 基本操作</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter5/" class="chapter-link ">
+                    <span class="chapter-number">5</span>
+                    <span>第5章 クエリ基礎</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter6/" class="chapter-link ">
+                    <span class="chapter-number">6</span>
+                    <span>第6章 クエリ応用技術</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter7/" class="chapter-link ">
+                    <span class="chapter-number">7</span>
+                    <span>第7章 インデックス最適化</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter8/" class="chapter-link ">
+                    <span class="chapter-number">8</span>
+                    <span>第8章 実践的分析手法</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter9/" class="chapter-link ">
+                    <span class="chapter-number">9</span>
+                    <span>第9章 生成AI活用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter10/" class="chapter-link ">
+                    <span class="chapter-number">10</span>
+                    <span>第10章 データ出力・連携</span>
+                </a>
+            </li>
+            
+
+            
+        </ul>
+    </div>
+</nav>
+        
+        <main class="main">
+            
+
+
+
+
+
+<div class="breadcrumb">
+  
+
+  
+  
+    <a href="/">ホーム</a> &gt;
+  
+
+  
+
+  
+    
+      
+    
+    
+    <span>第4章 基本操作（ビュー作成含む）</span>
+  
+</div>
+
+<div class="content-header">
+    <h1 class="content-title">第4章 基本操作（ビュー作成含む）</h1>
+    
+    <p class="content-subtitle">データベースの作成から、Accessのクエリに代わる「ビュー」の作成まで</p>
+    
+</div>
+
+<div class="content-body">
+    
+<div class="learning-objectives">
+  <h3>📚 この章で学習すること</h3>
+  <ul class="objectives-list">
+    <ul>
+<li>A5 SQL:Mk2を使ってテーブルを設計・作成する</li>
+<li>CSVファイルからテーブルへデータを簡単にインポートする</li>
+<li>MS Accessの「クエリ」の役割を果たす「ビュー」を作成・管理する</li>
+<li>基本的なデータの参照・追加・更新・削除（CRUD）操作に慣れる</li>
+</ul>
+
+  </ul>
+</div>
+<p>環境構築が完了したところで、いよいよデータベースを実際に操作していきます。この章では、テーブルの作成、データの投入、そしてMS Accessユーザーにとって最も重要な概念の一つである「ビュー」の作成方法まで、一連の基本操作を学びます。</p>
+<p>A5 SQL:Mk2のグラフィカルなインターフェースを使えば、SQLを直接書かなくても直感的に多くの操作が可能です。Accessのテーブルデザインビューやクエリデザインビューを思い出しながら、取り組んでいきましょう。</p>
+
+</div>
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+
+
+  <div class="section-list">
+      <h3>この章のコンテンツ</h3>
+      <ul class="chapter-list">
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter4/1_db_table_creation/" class="chapter-link">
+                    4.1 テーブルの作成
+                </a>
+              
+          </li>
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter4/2_data_import/" class="chapter-link">
+                    4.2 CSVからのデータインポート
+                </a>
+              
+          </li>
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter4/3_view_creation/" class="chapter-link">
+                    4.3 ビューの作成（Accessクエリの代替）
+                </a>
+              
+          </li>
+      
+      </ul>
+  </div>
+
+
+<div class="nav-buttons">
+    
+    
+        <a href="/chapter3/" class="nav-btn prev">← 前へ: 第3章 ハイブリッド運用（ODBC・パススルークエリ）</a>
+    
+
+    
+    
+        <a href="/chapter5/" class="nav-btn next">次へ: 第5章 クエリ基礎（IIF, COALESCE, CASE） →</a>
+    
+</div>
+
+        </main>
+        
+        <footer class="footer">
+    <p>&copy; 2025 SQLite&#43;A5 SQL:Mk2 学習サイト</p>
+</footer>
+    </div>
+    
+    <script src="/js/main.min.6a80bd6c365613ae74ea9b9c1b373baf4fed41b11102bab2731a165dda73a8a3.js" defer></script>
+
+    
+  
+  
+
+</body>
+</html>

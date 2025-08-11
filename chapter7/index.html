@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第7章 インデックス最適化 | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    
+    <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
+    
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+    <div class="header-content">
+        <div class="header-title">
+            <h1><a href="/">SQLite &#43; A5 SQL:Mk2 学習サイト</a></h1>
+            <span class="header-subtitle">SQLiteを用いた効率的データ分析</span>
+        </div>
+        
+        <button id="menu-toggle" class="menu-toggle" aria-label="ナビゲーションを開く">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+    </div>
+    
+    
+    
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      
+      
+
+
+
+
+
+  
+
+
+
+
+  <div class="progress-container">
+      <div class="progress-bar">
+          <div class="progress-fill" style="width: 70%;"></div>
+      </div>
+      <span>進捗: 70% (7/10章)</span>
+  </div>
+
+
+</header>
+        
+
+
+
+<nav class="sidebar">
+    <div class="nav-section">
+        <h3>学習コース</h3>
+        <ul class="chapter-list">
+            
+
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter1/" class="chapter-link ">
+                    <span class="chapter-number">1</span>
+                    <span>第1章 移行メリット詳細</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter2/" class="chapter-link ">
+                    <span class="chapter-number">2</span>
+                    <span>第2章 環境構築</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter3/" class="chapter-link ">
+                    <span class="chapter-number">3</span>
+                    <span>第3章 ハイブリッド運用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter4/" class="chapter-link ">
+                    <span class="chapter-number">4</span>
+                    <span>第4章 基本操作</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter5/" class="chapter-link ">
+                    <span class="chapter-number">5</span>
+                    <span>第5章 クエリ基礎</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter6/" class="chapter-link ">
+                    <span class="chapter-number">6</span>
+                    <span>第6章 クエリ応用技術</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter7/" class="chapter-link ">
+                    <span class="chapter-number">7</span>
+                    <span>第7章 インデックス最適化</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter8/" class="chapter-link ">
+                    <span class="chapter-number">8</span>
+                    <span>第8章 実践的分析手法</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter9/" class="chapter-link ">
+                    <span class="chapter-number">9</span>
+                    <span>第9章 生成AI活用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter10/" class="chapter-link ">
+                    <span class="chapter-number">10</span>
+                    <span>第10章 データ出力・連携</span>
+                </a>
+            </li>
+            
+
+            
+        </ul>
+    </div>
+</nav>
+        
+        <main class="main">
+            
+
+
+
+
+
+<div class="breadcrumb">
+  
+
+  
+  
+    <a href="/">ホーム</a> &gt;
+  
+
+  
+
+  
+    
+      
+    
+    
+    <span>第7章 インデックス最適化</span>
+  
+</div>
+
+<div class="content-header">
+    <h1 class="content-title">第7章 インデックス最適化</h1>
+    
+    <p class="content-subtitle">検索を劇的に速くするデータベースの魔法</p>
+    
+</div>
+
+<div class="content-body">
+    
+<div class="learning-objectives">
+  <h3>📚 この章で学習すること</h3>
+  <ul class="objectives-list">
+    <ul>
+<li>インデックスがなぜ検索を高速化するのか、その基本的な仕組みを理解する</li>
+<li><code>CREATE INDEX</code>文を使って、テーブルにインデックスを追加する</li>
+<li>A5 SQL:Mk2のGUIを使って、視覚的にインデックスを管理する</li>
+<li><code>EXPLAIN QUERY PLAN</code>を使い、インデックスが有効に機能しているか科学的に評価する</li>
+<li>複数の列を組み合わせた「複合インデックス」を設計し、より複雑な検索を高速化する</li>
+</ul>
+
+  </ul>
+</div>
+<p>データが数万、数十万件に増えてくると、「特定の条件のデータを検索するだけで数十秒もかかる…」という経験はありませんか？この問題を解決するのが「<strong>インデックス</strong>」です。</p>
+<p>インデックスは、分厚い本の巻末にある「索引」のようなものです。索引があれば、探したい単語がどのページにあるか瞬時に分かります。データベースにおけるインデックスも全く同じで、特定のデータがどこにあるかを高速に見つけ出すための仕組みです。</p>
+<p>この章では、インデックスを効果的に設計・活用し、これまで時間がかかっていた検索処理を劇的に高速化させるための実践的なテクニックを学びます。</p>
+
+</div>
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+  <div class="section-list">
+      <h3>この章のコンテンツ</h3>
+      <ul class="chapter-list">
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter7/1_what_is_index/" class="chapter-link">
+                    7.1 インデックスの仕組み
+                </a>
+              
+          </li>
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter7/2_how_to_create/" class="chapter-link">
+                    7.2 インデックスの作成方法
+                </a>
+              
+          </li>
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter7/3_how_to_evaluate/" class="chapter-link">
+                    7.3 効果の測定：EXPLAIN QUERY PLAN
+                </a>
+              
+          </li>
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter7/4_composite_index/" class="chapter-link">
+                    7.4 複合インデックスの活用
+                </a>
+              
+          </li>
+      
+      </ul>
+  </div>
+
+
+<div class="nav-buttons">
+    
+    
+        <a href="/chapter5/" class="nav-btn prev">← 前へ: 第5章 クエリ基礎（IIF, COALESCE, CASE）</a>
+    
+
+    
+    
+        <a href="/chapter8/" class="nav-btn next">次へ: 第8章 実践的分析手法（クロス集計、複合技術活用） →</a>
+    
+</div>
+
+        </main>
+        
+        <footer class="footer">
+    <p>&copy; 2025 SQLite&#43;A5 SQL:Mk2 学習サイト</p>
+</footer>
+    </div>
+    
+    <script src="/js/main.min.6a80bd6c365613ae74ea9b9c1b373baf4fed41b11102bab2731a165dda73a8a3.js" defer></script>
+
+    
+  
+  
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.3 IF EXISTSによる安全な操作 | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    
+    <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
+    
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+    <div class="header-content">
+        <div class="header-title">
+            <h1><a href="/">SQLite &#43; A5 SQL:Mk2 学習サイト</a></h1>
+            <span class="header-subtitle">SQLiteを用いた効率的データ分析</span>
+        </div>
+        
+        <button id="menu-toggle" class="menu-toggle" aria-label="ナビゲーションを開く">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+    </div>
+    
+    
+    
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      
+      
+
+
+
+
+
+  
+
+
+
+
+  <div class="progress-container">
+      <div class="progress-bar">
+          <div class="progress-fill" style="width: 60%;"></div>
+      </div>
+      <span>進捗: 60% (6/10章)</span>
+  </div>
+
+
+</header>
+        
+
+
+
+<nav class="sidebar">
+    <div class="nav-section">
+        <h3>学習コース</h3>
+        <ul class="chapter-list">
+            
+
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter1/" class="chapter-link ">
+                    <span class="chapter-number">1</span>
+                    <span>第1章 移行メリット詳細</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter2/" class="chapter-link ">
+                    <span class="chapter-number">2</span>
+                    <span>第2章 環境構築</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter3/" class="chapter-link ">
+                    <span class="chapter-number">3</span>
+                    <span>第3章 ハイブリッド運用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter4/" class="chapter-link ">
+                    <span class="chapter-number">4</span>
+                    <span>第4章 基本操作</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter5/" class="chapter-link ">
+                    <span class="chapter-number">5</span>
+                    <span>第5章 クエリ基礎</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter6/" class="chapter-link ">
+                    <span class="chapter-number">6</span>
+                    <span>第6章 クエリ応用技術</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter7/" class="chapter-link ">
+                    <span class="chapter-number">7</span>
+                    <span>第7章 インデックス最適化</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter8/" class="chapter-link ">
+                    <span class="chapter-number">8</span>
+                    <span>第8章 実践的分析手法</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter9/" class="chapter-link ">
+                    <span class="chapter-number">9</span>
+                    <span>第9章 生成AI活用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter10/" class="chapter-link ">
+                    <span class="chapter-number">10</span>
+                    <span>第10章 データ出力・連携</span>
+                </a>
+            </li>
+            
+
+            
+        </ul>
+    </div>
+</nav>
+        
+        <main class="main">
+            
+
+
+
+
+
+<div class="breadcrumb">
+  
+
+  
+  
+    <a href="/">ホーム</a> &gt;
+  
+
+  
+
+  
+    
+      
+    
+      
+        <a href="/chapter6/">第6章 クエリ応用技術（CTE、一時テーブル、IF EXISTS）</a> &gt;
+      
+    
+    
+    <span>6.3 IF EXISTSによる安全な操作</span>
+  
+</div>
+
+<div class="content-header">
+    <h1 class="content-title">6.3 IF EXISTSによる安全な操作</h1>
+    
+    <p class="content-subtitle">オブジェクトの存在を確認してから処理を実行します</p>
+    
+</div>
+
+<div class="content-body">
+    <p>テーブルやビューを削除（<code>DROP</code>）したり、作成（<code>CREATE</code>）したりする際に、「すでに存在する場合」や「存在しない場合」にエラーが発生するのを防ぐための構文です。</p>
+<h3 id="drop--if-exists"><code>DROP ... IF EXISTS</code></h3>
+<p>オブジェクトが存在する場合にのみ、削除を実行します。バッチ処理などで、毎回まっさらな状態からテーブルを作成したい場合などによく使われます。</p>
+<p>
+<div class="code-block-container">
+  <div class="code-header">テーブルが存在すれば削除する</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-- もし T_MonthlySummary というテーブルが存在すれば、それを削除する
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">T_MonthlySummary</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-- この後で、新しい T_MonthlySummary テーブルを作成する処理を続ける
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">T_MonthlySummary</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">...;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>  
+</div>
+これがあれば、初回実行時（テーブルが存在しない）でもエラーにならず、安全にスクリプトを実行できます。</p>
+<h3 id="create--if-not-exists"><code>CREATE ... IF NOT EXISTS</code></h3>
+<p>オブジェクトが存在しない場合にのみ、作成を実行します。</p>
+
+<div class="code-block-container">
+  <div class="code-header">ビューが存在しなければ作成する</div>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1">-- もし V_SalesDetails というビューが存在しなければ、それを作成する
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">V_SalesDetails</span><span class="w"> </span><span class="k">AS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="p">...;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div>  
+</div>
+
+<div class="info-box warning">
+  <div class="info-box-title">A5 SQL:Mk2の挙動</div>
+  <p>A5 SQL:Mk2のテーブル作成GUIなどで生成されるSQLには、デフォルトで <code>IF NOT EXISTS</code> が付いていることが多いです。ツールが安全なコードを自動生成してくれている良い例です。</p>
+</div>
+<p>これらの構文を適切に使うことで、誰がいつ実行してもエラーが起きにくい、堅牢なSQLスクリプトを作成することができます。</p>
+
+</div>
+
+
+
+  
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+<div class="nav-buttons">
+    
+    
+        <a href="/chapter6/2_temp_table/" class="nav-btn prev">← 前へ: 6.2 一時テーブルの活用</a>
+    
+
+    
+    
+        
+    
+</div>
+
+        </main>
+        
+        <footer class="footer">
+    <p>&copy; 2025 SQLite&#43;A5 SQL:Mk2 学習サイト</p>
+</footer>
+    </div>
+    
+    <script src="/js/main.min.6a80bd6c365613ae74ea9b9c1b373baf4fed41b11102bab2731a165dda73a8a3.js" defer></script>
+
+    
+  
+  
+
+</body>
+</html>

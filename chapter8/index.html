@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第8章 実践的分析手法（クロス集計、複合技術活用） | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    
+    <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
+    
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+    <div class="header-content">
+        <div class="header-title">
+            <h1><a href="/">SQLite &#43; A5 SQL:Mk2 学習サイト</a></h1>
+            <span class="header-subtitle">SQLiteを用いた効率的データ分析</span>
+        </div>
+        
+        <button id="menu-toggle" class="menu-toggle" aria-label="ナビゲーションを開く">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+    </div>
+    
+    
+    
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      
+      
+
+
+
+
+
+  
+
+
+
+
+  <div class="progress-container">
+      <div class="progress-bar">
+          <div class="progress-fill" style="width: 80%;"></div>
+      </div>
+      <span>進捗: 80% (8/10章)</span>
+  </div>
+
+
+</header>
+        
+
+
+
+<nav class="sidebar">
+    <div class="nav-section">
+        <h3>学習コース</h3>
+        <ul class="chapter-list">
+            
+
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter1/" class="chapter-link ">
+                    <span class="chapter-number">1</span>
+                    <span>第1章 移行メリット詳細</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter2/" class="chapter-link ">
+                    <span class="chapter-number">2</span>
+                    <span>第2章 環境構築</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter3/" class="chapter-link ">
+                    <span class="chapter-number">3</span>
+                    <span>第3章 ハイブリッド運用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter4/" class="chapter-link ">
+                    <span class="chapter-number">4</span>
+                    <span>第4章 基本操作</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter5/" class="chapter-link ">
+                    <span class="chapter-number">5</span>
+                    <span>第5章 クエリ基礎</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter6/" class="chapter-link ">
+                    <span class="chapter-number">6</span>
+                    <span>第6章 クエリ応用技術</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter7/" class="chapter-link ">
+                    <span class="chapter-number">7</span>
+                    <span>第7章 インデックス最適化</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter8/" class="chapter-link ">
+                    <span class="chapter-number">8</span>
+                    <span>第8章 実践的分析手法</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter9/" class="chapter-link ">
+                    <span class="chapter-number">9</span>
+                    <span>第9章 生成AI活用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter10/" class="chapter-link ">
+                    <span class="chapter-number">10</span>
+                    <span>第10章 データ出力・連携</span>
+                </a>
+            </li>
+            
+
+            
+        </ul>
+    </div>
+</nav>
+        
+        <main class="main">
+            
+
+
+
+
+
+<div class="breadcrumb">
+  
+
+  
+  
+    <a href="/">ホーム</a> &gt;
+  
+
+  
+
+  
+    
+      
+    
+    
+    <span>第8章 実践的分析手法（クロス集計、複合技術活用）</span>
+  
+</div>
+
+<div class="content-header">
+    <h1 class="content-title">第8章 実践的分析手法（クロス集計、複合技術活用）</h1>
+    
+    <p class="content-subtitle">学んだ技術を組み合わせて、価値あるインサイトを引き出す</p>
+    
+</div>
+
+<div class="content-body">
+    
+<div class="learning-objectives">
+  <h3>📚 この章で学習すること</h3>
+  <ul class="objectives-list">
+    <ul>
+<li><code>CASE</code>文や<code>IIF</code>関数と集計関数を組み合わせ、クロス集計表（ピボットテーブル）を作成する</li>
+<li><code>COALESCE</code>関数を使い、集計結果のNULL（空欄）を0に置き換える</li>
+<li>CTEを活用して、複雑な集計処理を段階的に、かつ可読性高く組み立てる</li>
+<li>複数のSQL技術を組み合わせて、実務的な分析課題を解決する思考プロセスを学ぶ</li>
+</ul>
+
+  </ul>
+</div>
+<p>これまでの章で、SQLの様々な部品（<code>JOIN</code>, <code>GROUP BY</code>, <code>CASE</code>, CTEなど）を学んできました。この章では、それらの部品をプラモデルのように組み上げ、実務で頻繁に求められる「<strong>クロス集計</strong>」のような、より価値のある分析レポートを作成する技術を習得します。</p>
+<p>Excelのピボットテーブルで実現しているような集計も、SQLを使いこなせばデータベース側で直接、かつ高速に実行できます。個別の技術をいかにして組み合わせ、目的の分析結果を導き出すか。その思考プロセスに焦点を当てて学んでいきましょう。</p>
+
+</div>
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+
+
+  <div class="section-list">
+      <h3>この章のコンテンツ</h3>
+      <ul class="chapter-list">
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter8/1_crosstab_case/" class="chapter-link">
+                    8.1 CASE文によるクロス集計
+                </a>
+              
+          </li>
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter8/2_crosstab_iif/" class="chapter-link">
+                    8.2 IIF関数によるシンプルなクロス集計
+                </a>
+              
+          </li>
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter8/3_advanced_analysis/" class="chapter-link">
+                    8.3 CTEを活用した段階的集計
+                </a>
+              
+          </li>
+      
+      </ul>
+  </div>
+
+
+<div class="nav-buttons">
+    
+    
+        <a href="/chapter7/" class="nav-btn prev">← 前へ: 第7章 インデックス最適化</a>
+    
+
+    
+    
+        <a href="/chapter9/" class="nav-btn next">次へ: 第9章 生成AI活用（ChatGPT） →</a>
+    
+</div>
+
+        </main>
+        
+        <footer class="footer">
+    <p>&copy; 2025 SQLite&#43;A5 SQL:Mk2 学習サイト</p>
+</footer>
+    </div>
+    
+    <script src="/js/main.min.6a80bd6c365613ae74ea9b9c1b373baf4fed41b11102bab2731a165dda73a8a3.js" defer></script>
+
+    
+  
+  
+
+</body>
+</html>

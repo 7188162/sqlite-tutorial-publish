@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://example.org/chapter6/1_cte/</loc>
+  </url><url>
+    <loc>https://example.org/chapter1/</loc>
+  </url><url>
+    <loc>https://example.org/chapter6/2_temp_table/</loc>
+  </url><url>
+    <loc>https://example.org/chapter2/</loc>
+  </url><url>
+    <loc>https://example.org/chapter6/3_if_exists/</loc>
+  </url><url>
+    <loc>https://example.org/chapter3/</loc>
+  </url><url>
+    <loc>https://example.org/chapter4/</loc>
+  </url><url>
+    <loc>https://example.org/chapter5/</loc>
+  </url><url>
+    <loc>https://example.org/chapter6/</loc>
+  </url><url>
+    <loc>https://example.org/chapter7/</loc>
+  </url><url>
+    <loc>https://example.org/chapter8/</loc>
+  </url><url>
+    <loc>https://example.org/chapter9/</loc>
+  </url><url>
+    <loc>https://example.org/chapter10/</loc>
+  </url><url>
+    <loc>https://example.org/categories/</loc>
+  </url><url>
+    <loc>https://example.org/tags/</loc>
+  </url><url>
+    <loc>https://example.org/</loc>
+  </url>
+</urlset>

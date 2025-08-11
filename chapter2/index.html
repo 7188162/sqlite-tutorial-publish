@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第2章 環境構築 | SQLite &#43; A5 SQL:Mk2 学習サイト</title>
+    
+    <link rel="stylesheet" href="/scss/style.min.5760b8d41248f215dbf3ef61a2add353b1ca309bc635971a1980d07fbaf64e49.css">
+    
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+    <div class="header-content">
+        <div class="header-title">
+            <h1><a href="/">SQLite &#43; A5 SQL:Mk2 学習サイト</a></h1>
+            <span class="header-subtitle">SQLiteを用いた効率的データ分析</span>
+        </div>
+        
+        <button id="menu-toggle" class="menu-toggle" aria-label="ナビゲーションを開く">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+
+    </div>
+    
+    
+    
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+
+
+
+  
+  
+    
+  
+    
+      
+      
+
+
+
+
+
+  
+
+
+
+
+  <div class="progress-container">
+      <div class="progress-bar">
+          <div class="progress-fill" style="width: 20%;"></div>
+      </div>
+      <span>進捗: 20% (2/10章)</span>
+  </div>
+
+
+</header>
+        
+
+
+
+<nav class="sidebar">
+    <div class="nav-section">
+        <h3>学習コース</h3>
+        <ul class="chapter-list">
+            
+
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter1/" class="chapter-link ">
+                    <span class="chapter-number">1</span>
+                    <span>第1章 移行メリット詳細</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter2/" class="chapter-link ">
+                    <span class="chapter-number">2</span>
+                    <span>第2章 環境構築</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter3/" class="chapter-link ">
+                    <span class="chapter-number">3</span>
+                    <span>第3章 ハイブリッド運用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter4/" class="chapter-link ">
+                    <span class="chapter-number">4</span>
+                    <span>第4章 基本操作</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter5/" class="chapter-link ">
+                    <span class="chapter-number">5</span>
+                    <span>第5章 クエリ基礎</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter6/" class="chapter-link ">
+                    <span class="chapter-number">6</span>
+                    <span>第6章 クエリ応用技術</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter7/" class="chapter-link ">
+                    <span class="chapter-number">7</span>
+                    <span>第7章 インデックス最適化</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter8/" class="chapter-link ">
+                    <span class="chapter-number">8</span>
+                    <span>第8章 実践的分析手法</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter9/" class="chapter-link ">
+                    <span class="chapter-number">9</span>
+                    <span>第9章 生成AI活用</span>
+                </a>
+            </li>
+            
+            <li class="chapter-item">
+                
+                
+                
+
+                <a href="/chapter10/" class="chapter-link ">
+                    <span class="chapter-number">10</span>
+                    <span>第10章 データ出力・連携</span>
+                </a>
+            </li>
+            
+
+            
+        </ul>
+    </div>
+</nav>
+        
+        <main class="main">
+            
+
+
+
+
+
+<div class="breadcrumb">
+  
+
+  
+  
+    <a href="/">ホーム</a> &gt;
+  
+
+  
+
+  
+    
+      
+    
+    
+    <span>第2章 環境構築</span>
+  
+</div>
+
+<div class="content-header">
+    <h1 class="content-title">第2章 環境構築</h1>
+    
+    <p class="content-subtitle">分析の準備をしよう！SQLiteとA5 SQL:Mk2の導入から初期設定まで</p>
+    
+</div>
+
+<div class="content-body">
+    
+<div class="learning-objectives">
+  <h3>📚 この章で学習すること</h3>
+  <ul class="objectives-list">
+    <ul>
+<li>SQLiteをPCにインストールする</li>
+<li>高機能なデータベース管理ツール「A5 SQL:Mk2」を導入する</li>
+<li>A5 SQL:Mk2を使ってSQLiteデータベースに接続する</li>
+<li>データベースファイルのバックアップと復旧方法を理解する</li>
+</ul>
+
+  </ul>
+</div>
+<p>この章では、データ分析の土台となる環境を構築します。MS Accessとは異なり、SQLiteはいくつかのツールを組み合わせて利用するのが一般的です。</p>
+<p>ここでは、世界中で広く使われているデータベースエンジン「<strong>SQLite</strong>」と、日本の開発者によって作られた非常に高機能で使いやすい管理ツール「<strong>A5 SQL:Mk2</strong>（エーファイブ・エスキューエル・マークツー）」の2つを導入します。</p>
+<p>一つ一つの手順を丁寧に解説しますので、一緒に進めていきましょう。</p>
+
+</div>
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+
+
+
+  <div class="section-list">
+      <h3>この章のコンテンツ</h3>
+      <ul class="chapter-list">
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter2/1_install/" class="chapter-link">
+                    2.1 ツールのインストール
+                </a>
+              
+          </li>
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter2/2_setup/" class="chapter-link">
+                    2.2 データベースへの接続
+                </a>
+              
+          </li>
+      
+          <li class="chapter-item">
+              
+                
+                
+                
+                <a href="/chapter2/3_backup/" class="chapter-link">
+                    2.3 バックアップと復旧
+                </a>
+              
+          </li>
+      
+      </ul>
+  </div>
+
+
+<div class="nav-buttons">
+    
+    
+        <a href="/chapter1/" class="nav-btn prev">← 前へ: 第1章 移行メリット詳細（パフォーマンス・概念比較）</a>
+    
+
+    
+    
+        <a href="/chapter3/" class="nav-btn next">次へ: 第3章 ハイブリッド運用（ODBC・パススルークエリ） →</a>
+    
+</div>
+
+        </main>
+        
+        <footer class="footer">
+    <p>&copy; 2025 SQLite&#43;A5 SQL:Mk2 学習サイト</p>
+</footer>
+    </div>
+    
+    <script src="/js/main.min.6a80bd6c365613ae74ea9b9c1b373baf4fed41b11102bab2731a165dda73a8a3.js" defer></script>
+
+    
+  
+  
+
+</body>
+</html>
